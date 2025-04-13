@@ -1,0 +1,16 @@
+{
+  "roles": [
+    {
+      "role_id": "934861968190369802",
+      "permission": "group.vip"
+    },
+    {
+      "role_id": "953315589890404403",
+      "permission": "group.vip2"
+    },
+    {
+      "role_id": "993233366671446137",
+      "permission": "group.vip3"
+    }
+  ]
+}
