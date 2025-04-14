@@ -1,0 +1,26 @@
+{
+  "generic": {
+    "none": "None"
+  },
+  "command": {
+    "generic": {
+      "playeronly": "<red>This command is only for players!</red>"
+    },
+    "discord": {
+      "usage": "<red>Usage: /discord [link|unlink|info]</red>",
+      "invite": "<blue>Join your Discord server <underlined><click:open_url:'https://discord.gg/yourserver'>here</click></underlined></blue>",
+      "alreadylinked": "<red>Your account is already linked.</red>",
+      "linked": "<green>Your account was linked successfully. ([discordUsername])</green>",
+      "notlinked": "<red>Your account is not linked.</red>",
+      "unlinked": "<green>Your account was unlinked successfully.</green>",
+      "info": "<blue>Your account is linked to Discord account [discordUsername] ([discordId])</blue>",
+      "link": "<blue>Link your account <underlined><click:open_url:'[linkUrl]'>here</click></underlined></blue>"
+    },
+    "admin": {
+      "usage": "<red>Usage: /discordadmin <resync|resyncAll> [player]</red>",
+      "noperms": "<red>You don't have permission to use this command.</red>",
+      "resync": "<green>Synchronization successful</green>"
+    },
+    "message": ""
+  }
+}

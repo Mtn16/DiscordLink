@@ -1,0 +1,30 @@
+{
+  "database": {
+    "host": "",
+    "port": 3306,
+    "name": "",
+    "username": "",
+    "password": "",
+    "useSSL": false
+  },
+  "webserver": {
+    "port": 80,
+    "ip": "192.168.0.1",
+    "domain": {
+      "use": false,
+      "domain": "verify.yourserver.com",
+      "https": true
+    }
+  },
+  "discord": {
+    "guildId": "",
+    "client": {
+      "id": "",
+      "secret": ""
+    },
+    "bot": {
+      "token": "",
+      "presence": "play.yourserver.com"
+    }
+  }
+}
