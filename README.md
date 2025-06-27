@@ -1,6 +1,53 @@
-# DiscordLink
+## 📦 DiscordLink - Seamless Discord Integration for Velocity
 
-A Velocity plugin for Discord integration.  
+**DiscordLink** is a lightweight, modern plugin that provides seamless, real-time integration between your Velocity Minecraft server and your Discord community.
+
+With DiscordLink, players can securely link their Minecraft accounts with Discord using OAuth2 — no need to manually enter codes.
+
+---
+
+### ✨ Key Features
+
+* 🔗 **Account Linking via OAuth2**
+  Players can easily and securely link their accounts through a simple Discord authorization flow — no code entry required.
+
+* ⚙️ **Highly Configurable**
+  Easily adjust settings and customize the integration to fit your server's needs.
+
+* 🚀 **Optimized for Performance**
+  Designed specifically for Velocity to ensure minimal resource usage and fast response times.
+
+---
+
+### 🔧 Requirements
+
+* Velocity Proxy Server
+* [LuckPerms](https://modrinth.com/plugin/luckperms) plugin on your Velocity server
+* Java 17 or newer
+* MySQL or MariaDB database
+* Open port for web server
+* A Discord bot token with the required permissions
+* A registered OAuth2 Discord application
+
+---
+
+### 📂 Open Source & Extensible
+
+DiscordLink is open source under the **MIT License** with a dedicated **Patent License Addendum.**
+You are encouraged to contribute, build your own versions, or replace bundled libraries to suit your needs.
+
+---
+
+### 📜 Third-Party Libraries
+
+This plugin uses several third-party libraries such as JDA, Gson, Kotlin Standard Library, and more. Full list and licenses can be found in the `THIRD-PARTY.txt` and `licenses/` folder included with the plugin.
+
+---
+
+### 💬 Get Involved
+
+Found an issue? Have a feature request?
+Feel free to open an issue or submit a pull request on the project’s GitHub page.
 
 ---
 
