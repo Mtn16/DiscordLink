@@ -1,7 +1,6 @@
 # DiscordLink
 
 A Velocity plugin for Discord integration.  
-*(Replace this with your actual project description)*
 
 ---
 
