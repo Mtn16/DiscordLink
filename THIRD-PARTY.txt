@@ -1,0 +1,15 @@
+This plugin uses the following third-party libraries:
+
+- Kotlin Standard Library - Apache 2.0 - https://kotlinlang.org/
+- Gson - Apache 2.0 - https://github.com/google/gson
+- MySQL Connector/J - GPLv2 with FOSS Exception - https://dev.mysql.com/downloads/connector/j/
+- JDA - Apache 2.0 - https://github.com/DV8FromTheWorld/JDA
+- OkHttp - Apache 2.0 - https://square.github.io/okhttp/
+- Okio - Apache 2.0 - https://square.github.io/okio/
+- Trove4j - LGPL - https://bitbucket.org/trove4j/trove
+- nv-websocket-client - Apache 2.0 - https://github.com/TakahikoKawasaki/nv-websocket-client
+- Jackson Core, Databind, Annotations - Apache 2.0 - https://github.com/FasterXML/jackson
+- HikariCP - Apache 2.0 - https://github.com/brettwooldridge/HikariCP
+- Commons Collections 4 - Apache 2.0 - https://commons.apache.org/proper/commons-collections/
+
+Each library is included under its respective license. Please refer to the LICENSE files in the /licenses directory for more information.

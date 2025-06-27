@@ -7,6 +7,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
+import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
@@ -30,7 +31,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-@Plugin(id = "discordlink", name = "DiscordLink", version = "1.0-SNAPSHOT", authors = {"Mtn16"})
+@Plugin(id = "discordlink", name = "DiscordLink", version = "25.1",
+        authors = {"Mtn16"}, url = "https://github.com/Mtn16/DiscordLink",
+        description = "A Velocity plugin for Discord integration.",
+        dependencies = {
+            @Dependency(id = "luckperms", optional = false)
+        })
 public class DiscordLink {
     private static DiscordLink instance;
 

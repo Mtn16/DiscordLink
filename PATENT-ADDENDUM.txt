@@ -1,0 +1,18 @@
+PATENT LICENSE ADDENDUM
+
+Copyright (c) 2025 Martin Goc
+
+In addition to the rights granted under the MIT License, the copyright holder
+hereby grants to any recipient of this software a perpetual, worldwide,
+non-exclusive, no-charge, royalty-free, irrevocable patent license to make,
+use, sell, offer for sale, import, and otherwise run, modify, and propagate
+the software or derivative works thereof, to the extent that such patent
+rights are held by the copyright holder and are necessarily infringed by the
+software as provided.
+
+This patent license applies only to patent claims that are necessarily
+infringed by the use or sale of the software itself, and does not grant any
+rights for any other patents that the recipient might have or obtain.
+
+This addendum is provided as a supplement to the MIT License and does not
+replace or modify the terms of the MIT License.
