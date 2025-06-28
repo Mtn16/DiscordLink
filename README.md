@@ -53,7 +53,6 @@ Feel free to open an issue or submit a pull request on the project’s GitHub pa
 
 ### 🎈 Future plans
 
-* Spigot / Paper server support
 * Chat synchronization
 * Nickname synchronization
 * PlaceholderAPI support
