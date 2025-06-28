@@ -1,0 +1,18 @@
+name: DiscordLink
+version: 25.2
+main: cz.bloodbear.discordLink.paper.DiscordLink
+api-version: 1.20
+
+author: Mtn16
+description: A Velocity plugin for Discord integration.
+website: https://github.com/Mtn16/DiscordLink
+depend: [LuckPerms]
+
+commands:
+  discordadmin:
+    description: DiscordLink admin command
+    usage: /discordadmin <resync|resyncAll> [player]
+    permission: discordlink.admin
+  discord:
+    description: DiscordLink admin command
+    usage: /discord [link|unlink|info]

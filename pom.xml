@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cz.bloodbear</groupId>
     <artifactId>DiscordLink</artifactId>
-    <version>25.1</version>
+    <version>25.2</version>
     <packaging>jar</packaging>
     <name>DiscordLink</name>
     <properties>
@@ -220,6 +220,12 @@
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity-api</artifactId>
             <version>3.4.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.21.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
