@@ -9,9 +9,9 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import cz.bloodbear.discordLink.velocity.DiscordLink;
-import cz.bloodbear.discordLink.velocity.utils.CodeGenerator;
+import cz.bloodbear.discordLink.core.utils.CodeGenerator;
 import cz.bloodbear.discordLink.velocity.utils.DatabaseManager;
-import cz.bloodbear.discordLink.velocity.utils.DiscordUtils;
+import cz.bloodbear.discordLink.core.utils.DiscordUtils;
 import cz.bloodbear.discordLink.velocity.utils.PlaceholderRegistry;
 
 import java.util.Arrays;

@@ -1,10 +1,10 @@
 package cz.bloodbear.discordLink.paper.discord;
 
 import cz.bloodbear.discordLink.paper.DiscordLink;
-import cz.bloodbear.discordLink.paper.records.RoleEntry;
-import cz.bloodbear.discordLink.paper.utils.ConsoleColor;
+import cz.bloodbear.discordLink.core.records.RoleEntry;
+import cz.bloodbear.discordLink.core.utils.ConsoleColor;
 import cz.bloodbear.discordLink.paper.utils.DatabaseManager;
-import cz.bloodbear.discordLink.paper.utils.DiscordUtils;
+import cz.bloodbear.discordLink.core.utils.DiscordUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.*;
@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class DiscordBot extends ListenerAdapter {
     private final JDA jda;

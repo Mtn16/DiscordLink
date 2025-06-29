@@ -17,7 +17,7 @@ import cz.bloodbear.discordLink.velocity.discord.DiscordBot;
 import cz.bloodbear.discordLink.velocity.placeholders.DiscordIdPlaceholder;
 import cz.bloodbear.discordLink.velocity.placeholders.DiscordUsernamePlaceholder;
 import cz.bloodbear.discordLink.velocity.placeholders.PlayerNamePlaceholder;
-import cz.bloodbear.discordLink.velocity.records.RoleEntry;
+import cz.bloodbear.discordLink.core.records.RoleEntry;
 import cz.bloodbear.discordLink.velocity.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-@Plugin(id = "discordlink", name = "DiscordLink", version = "25.2",
+@Plugin(id = "discordlink", name = "DiscordLink", version = "25.3",
         authors = {"Mtn16"}, url = "https://github.com/Mtn16/DiscordLink",
         description = "A Velocity plugin for Discord integration.",
         dependencies = {

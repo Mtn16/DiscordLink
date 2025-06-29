@@ -2,7 +2,7 @@ package cz.bloodbear.discordLink.paper.placeholders;
 
 import cz.bloodbear.discordLink.paper.DiscordLink;
 import cz.bloodbear.discordLink.paper.interfaces.Placeholder;
-import cz.bloodbear.discordLink.paper.records.DiscordAccount;
+import cz.bloodbear.discordLink.core.records.DiscordAccount;
 import org.bukkit.entity.Player;
 
 public class DiscordIdPlaceholder implements Placeholder {

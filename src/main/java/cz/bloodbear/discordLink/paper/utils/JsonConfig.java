@@ -2,7 +2,7 @@ package cz.bloodbear.discordLink.paper.utils;
 
 
 import com.google.gson.*;
-import cz.bloodbear.discordLink.paper.records.RoleEntry;
+import cz.bloodbear.discordLink.core.records.RoleEntry;
 import io.leangen.geantyref.TypeToken;
 
 import java.io.IOException;

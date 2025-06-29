@@ -6,9 +6,9 @@
 package cz.bloodbear.discordLink.paper.commands;
 
 import cz.bloodbear.discordLink.paper.DiscordLink;
-import cz.bloodbear.discordLink.paper.utils.CodeGenerator;
+import cz.bloodbear.discordLink.core.utils.CodeGenerator;
 import cz.bloodbear.discordLink.paper.utils.DatabaseManager;
-import cz.bloodbear.discordLink.paper.utils.DiscordUtils;
+import cz.bloodbear.discordLink.core.utils.DiscordUtils;
 import cz.bloodbear.discordLink.paper.utils.PlaceholderRegistry;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

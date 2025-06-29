@@ -3,7 +3,7 @@ package cz.bloodbear.discordLink.velocity.utils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import cz.bloodbear.discordLink.velocity.DiscordLink;
-import cz.bloodbear.discordLink.velocity.records.DiscordAccount;
+import cz.bloodbear.discordLink.core.records.DiscordAccount;
 import okhttp3.*;
 
 import java.io.IOException;

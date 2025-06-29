@@ -1,4 +1,4 @@
-package cz.bloodbear.discordLink.paper.utils;
+package cz.bloodbear.discordLink.core.utils;
 
 import net.dv8tion.jda.api.entities.Member;
 

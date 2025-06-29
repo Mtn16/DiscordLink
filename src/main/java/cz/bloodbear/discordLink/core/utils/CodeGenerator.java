@@ -1,4 +1,4 @@
-package cz.bloodbear.discordLink.paper.utils;
+package cz.bloodbear.discordLink.core.utils;
 
 import java.security.SecureRandom;
 import java.util.Base64;

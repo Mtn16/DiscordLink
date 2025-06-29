@@ -1,6 +1,8 @@
 package cz.bloodbear.discordLink.paper.utils;
 
+import cz.bloodbear.discordLink.paper.DiscordLink;
 import cz.bloodbear.discordLink.paper.interfaces.Placeholder;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -16,6 +18,9 @@ public class PlaceholderRegistry {
     public static String replacePlaceholders(String text, Player player) {
         for (Placeholder placeholder : placeholders.values()) {
             text = placeholder.replace(text, player);
+        }
+        if(DiscordLink.getInstance().isPlaceholderAPIEnabled()) {
+            PlaceholderAPI.setPlaceholders(player, text);
         }
         return text;
     }

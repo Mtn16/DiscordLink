@@ -3,8 +3,9 @@ package cz.bloodbear.discordLink.velocity.utils;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import cz.bloodbear.discordLink.core.utils.ConsoleColor;
 import cz.bloodbear.discordLink.velocity.DiscordLink;
-import cz.bloodbear.discordLink.velocity.records.DiscordAccount;
+import cz.bloodbear.discordLink.core.records.DiscordAccount;
 
 import java.io.IOException;
 import java.io.OutputStream;

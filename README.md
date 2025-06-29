@@ -1,4 +1,4 @@
-## 📦 DiscordLink - Seamless Discord Integration for Velocity
+## 📦 DiscordLink - Seamless Discord Integration for Velocity and Paper
 
 **DiscordLink** is a lightweight, modern plugin that provides seamless, real-time integration between your Velocity Minecraft server and your Discord community.
 
@@ -16,6 +16,9 @@ With DiscordLink, players can securely link their Minecraft accounts with Discor
 
 * 🚀 **Optimized for Performance**
   Designed specifically for Velocity to ensure minimal resource usage and fast response times.
+
+* 💎 **PlaceholderAPI Support (only on Paper)**
+  Feel free to use placeholders from PlaceholderAPI. DiscordLink itself provides placeholders for Discord account name and id
 
 ---
 
@@ -55,7 +58,6 @@ Feel free to open an issue or submit a pull request on the project’s GitHub pa
 
 * Chat synchronization
 * Nickname synchronization
-* PlaceholderAPI support
 
 ---
 

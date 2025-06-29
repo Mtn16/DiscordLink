@@ -1,10 +1,10 @@
 package cz.bloodbear.discordLink.velocity.discord;
 
 import cz.bloodbear.discordLink.velocity.DiscordLink;
-import cz.bloodbear.discordLink.velocity.records.RoleEntry;
-import cz.bloodbear.discordLink.velocity.utils.ConsoleColor;
+import cz.bloodbear.discordLink.core.records.RoleEntry;
+import cz.bloodbear.discordLink.core.utils.ConsoleColor;
 import cz.bloodbear.discordLink.velocity.utils.DatabaseManager;
-import cz.bloodbear.discordLink.velocity.utils.DiscordUtils;
+import cz.bloodbear.discordLink.core.utils.DiscordUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.*;

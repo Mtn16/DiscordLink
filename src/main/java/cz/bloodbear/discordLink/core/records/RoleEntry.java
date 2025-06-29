@@ -1,4 +1,4 @@
-package cz.bloodbear.discordLink.velocity.records;
+package cz.bloodbear.discordLink.core.records;
 
 public record RoleEntry(String roleId, String permission) {
 }

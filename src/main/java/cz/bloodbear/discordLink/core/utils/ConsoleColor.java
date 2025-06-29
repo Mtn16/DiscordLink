@@ -1,4 +1,4 @@
-package cz.bloodbear.discordLink.paper.utils;
+package cz.bloodbear.discordLink.core.utils;
 
 public abstract class ConsoleColor {
     private static final String RESET = "\u001B[0m";

@@ -1,7 +1,7 @@
 package cz.bloodbear.discordLink.paper.utils;
 
 import cz.bloodbear.discordLink.paper.DiscordLink;
-import cz.bloodbear.discordLink.paper.records.DiscordAccount;
+import cz.bloodbear.discordLink.core.records.DiscordAccount;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 

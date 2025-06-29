@@ -3,7 +3,7 @@ package cz.bloodbear.discordLink.paper.utils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import cz.bloodbear.discordLink.paper.DiscordLink;
-import cz.bloodbear.discordLink.paper.records.DiscordAccount;
+import cz.bloodbear.discordLink.core.records.DiscordAccount;
 import okhttp3.*;
 
 import java.io.IOException;

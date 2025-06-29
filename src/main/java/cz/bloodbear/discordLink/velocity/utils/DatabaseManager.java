@@ -2,7 +2,7 @@ package cz.bloodbear.discordLink.velocity.utils;
 
 import com.velocitypowered.api.proxy.Player;
 import cz.bloodbear.discordLink.velocity.DiscordLink;
-import cz.bloodbear.discordLink.velocity.records.DiscordAccount;
+import cz.bloodbear.discordLink.core.records.DiscordAccount;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import java.sql.*;

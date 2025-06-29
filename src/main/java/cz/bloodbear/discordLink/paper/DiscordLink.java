@@ -7,7 +7,7 @@ import cz.bloodbear.discordLink.paper.discord.DiscordBot;
 import cz.bloodbear.discordLink.paper.placeholders.DiscordIdPlaceholder;
 import cz.bloodbear.discordLink.paper.placeholders.DiscordUsernamePlaceholder;
 import cz.bloodbear.discordLink.paper.placeholders.PlayerNamePlaceholder;
-import cz.bloodbear.discordLink.paper.records.RoleEntry;
+import cz.bloodbear.discordLink.core.records.RoleEntry;
 import cz.bloodbear.discordLink.paper.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -49,6 +49,8 @@ public class DiscordLink extends JavaPlugin {
 
     private DiscordBot discordBot;
     private LuckPerms luckPerms;
+
+    private boolean isPlaceholderAPIEnabled;
 
     @Override
     public void onEnable() {
@@ -128,6 +130,10 @@ public class DiscordLink extends JavaPlugin {
         PlaceholderRegistry.registerPlaceholder(new PlayerNamePlaceholder());
         PlaceholderRegistry.registerPlaceholder(new DiscordIdPlaceholder());
         PlaceholderRegistry.registerPlaceholder(new DiscordUsernamePlaceholder());
+
+        isPlaceholderAPIEnabled = getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
+        if(!isPlaceholderAPIEnabled) return;
+        PlaceholderAPIHook.registerHook();
     }
 
     @Override
@@ -176,4 +182,8 @@ public class DiscordLink extends JavaPlugin {
     public String getRedirectUri() { return redirect; }
 
     public List<RoleEntry> getRoles() { return sync.getRoles("roles"); }
+
+    public boolean isPlaceholderAPIEnabled() {
+        return isPlaceholderAPIEnabled;
+    }
 }
