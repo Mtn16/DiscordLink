@@ -17,7 +17,7 @@ With DiscordLink, players can securely link their Minecraft accounts with Discor
 * 🚀 **Optimized for Performance**
   Designed specifically for Velocity to ensure minimal resource usage and fast response times.
 
-* 💎 **PlaceholderAPI Support (only on Paper)**
+* 🧩 **PlaceholderAPI Support (only on Paper)**
   Feel free to use placeholders from PlaceholderAPI. DiscordLink itself provides placeholders for Discord account name and id
 
 ---
