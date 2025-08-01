@@ -85,24 +85,26 @@ public class DiscordBot extends ListenerAdapter {
     }
 
     public void syncRoles(String uuid) {
-        User user = jda.retrieveUserById(databaseManager.getDiscordAccount(uuid).id()).complete();
-        Guild guild = jda.getGuildById(guildId);
-        if (guild == null) return;
+        new Thread(() -> {
+            User user = jda.retrieveUserById(databaseManager.getDiscordAccount(uuid).id()).complete();
+            Guild guild = jda.getGuildById(guildId);
+            if (guild == null) return;
 
-        Member member = guild.retrieveMemberById(user.getId()).complete();
+            Member member = guild.retrieveMemberById(user.getId()).complete();
 
-        if (member == null) return;
+            if (member == null) return;
 
-        for (RoleEntry role : DiscordLink.getInstance().getRoles()) {
-            Role guildRole = guild.getRoleById(role.roleId());
-            if(hasPermission(uuid, role.permission())) {
-                guild.addRoleToMember(member, guildRole).queue();
-                System.out.println("Adding role " + guildRole.getName() + " to " + member.getUser().getGlobalName());
+            for (RoleEntry role : DiscordLink.getInstance().getRoles()) {
+                Role guildRole = guild.getRoleById(role.roleId());
+                if(hasPermission(uuid, role.permission())) {
+                    guild.addRoleToMember(member, guildRole).queue();
+                    System.out.println("Adding role " + guildRole.getName() + " to " + member.getUser().getGlobalName());
 
-            } else {
-                guild.removeRoleFromMember(member, guildRole).queue();
+                } else {
+                    guild.removeRoleFromMember(member, guildRole).queue();
+                }
             }
-        }
+        }).start();
     }
 
     public boolean hasPermission(String uuid, String permission) {

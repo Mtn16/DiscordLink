@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package cz.bloodbear.discordLink.velocity.commands;
 
 import com.velocitypowered.api.command.CommandSource;

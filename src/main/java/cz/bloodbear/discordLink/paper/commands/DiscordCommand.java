@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package cz.bloodbear.discordLink.paper.commands;
 
 import cz.bloodbear.discordLink.paper.DiscordLink;
