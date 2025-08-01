@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-@Plugin(id = "discordlink", name = "DiscordLink", version = "25.3",
+@Plugin(id = "discordlink", name = "DiscordLink", version = "25.4",
         authors = {"Mtn16"}, url = "https://github.com/Mtn16/DiscordLink",
         description = "A Velocity plugin for Discord integration.",
         dependencies = {
