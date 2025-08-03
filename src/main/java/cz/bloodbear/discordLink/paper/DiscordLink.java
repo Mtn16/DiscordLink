@@ -34,6 +34,7 @@ public class DiscordLink extends JavaPlugin {
     private JsonConfig config;
     private JsonConfig messages;
     private JsonConfig sync;
+    private JsonConfig commands;
     private MiniMessage miniMessage;
 
     private HtmlPage linkedPage;
@@ -63,13 +64,10 @@ public class DiscordLink extends JavaPlugin {
         this.config = new JsonConfig(dataDirectory, "config.json");
         this.messages = new JsonConfig(dataDirectory, "messages.json");
         this.sync = new JsonConfig(dataDirectory, "sync.json");
+        this.commands = new JsonConfig(dataDirectory, "commands.json");
         this.miniMessage = MiniMessage.miniMessage();
 
-        this.linkedPage = new HtmlPage(dataDirectory, "linked.html");
-        this.failedPage = new HtmlPage(dataDirectory, "failed.html");
-        this.missingCodePage = new HtmlPage(dataDirectory, "missingCode.html");
-        this.missingStatePage = new HtmlPage(dataDirectory, "missingState.html");
-        this.invalidPage = new HtmlPage(dataDirectory, "invalid.html");
+        loadHTML();
 
         this.databaseManager = new DatabaseManager(
                 config.getString("database.host", ""),
@@ -136,6 +134,14 @@ public class DiscordLink extends JavaPlugin {
         PlaceholderAPIHook.registerHook();
     }
 
+    private void loadHTML() {
+        this.linkedPage = new HtmlPage(dataDirectory, "linked.html");
+        this.failedPage = new HtmlPage(dataDirectory, "failed.html");
+        this.missingCodePage = new HtmlPage(dataDirectory, "missingCode.html");
+        this.missingStatePage = new HtmlPage(dataDirectory, "missingState.html");
+        this.invalidPage = new HtmlPage(dataDirectory, "invalid.html");
+    }
+
     @Override
     public void onDisable() {
         databaseManager.close();
@@ -185,5 +191,15 @@ public class DiscordLink extends JavaPlugin {
 
     public boolean isPlaceholderAPIEnabled() {
         return isPlaceholderAPIEnabled;
+    }
+
+    @Override
+    public void reloadConfig() {
+        config.reload();
+        messages.reload();
+        sync.reload();
+        commands.reload();
+
+        loadHTML();
     }
 }

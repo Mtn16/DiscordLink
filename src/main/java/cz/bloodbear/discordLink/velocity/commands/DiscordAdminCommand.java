@@ -45,12 +45,20 @@ public class DiscordAdminCommand implements SimpleCommand {
             invocation.source().sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.resync")));
             return;
         }
+
+        if(args[0].equalsIgnoreCase("reload")) {
+            DiscordLink.getInstance().reloadConfig();
+            invocation.source().sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.reload")));
+            return;
+        }
+
+        return;
     }
 
 
     public List<String> suggest(Invocation invocation) {
         if(invocation.arguments().length <= 1) {
-            return Arrays.asList("resync", "resyncAll");
+            return Arrays.asList("resync", "resyncAll", "reload");
         } else if (invocation.arguments().length == 2) {
             List<String> suggestions = new ArrayList<>();
             DiscordLink.getInstance().getServer().getAllPlayers().forEach(player -> {

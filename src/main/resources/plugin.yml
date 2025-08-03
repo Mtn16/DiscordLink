@@ -1,5 +1,5 @@
 name: DiscordLink
-version: 25.4
+version: 25.5
 main: cz.bloodbear.discordLink.paper.DiscordLink
 api-version: 1.20
 

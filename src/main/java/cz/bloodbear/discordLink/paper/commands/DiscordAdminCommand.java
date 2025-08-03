@@ -55,13 +55,19 @@ public class DiscordAdminCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
+        if(args[0].equalsIgnoreCase("reload")) {
+            DiscordLink.getInstance().reloadConfig();
+            commandSender.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.reload")));
+            return true;
+        }
+
         return true;
     }
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] args) {
         if(args.length <= 1) {
-            return Arrays.asList("resync", "resyncAll");
+            return Arrays.asList("resync", "resyncAll", "reload");
         } else if (args.length == 2) {
             List<String> suggestions = new ArrayList<>();
             DiscordLink.getInstance().getServer().getOnlinePlayers().forEach(player -> {

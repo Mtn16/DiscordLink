@@ -17,9 +17,10 @@
       "link": "<blue>Link your account <underlined><click:open_url:'[linkUrl]'>here</click></underlined></blue>"
     },
     "admin": {
-      "usage": "<red>Usage: /discordadmin <resync|resyncAll> [player]</red>",
+      "usage": "<red>Usage: /discordadmin <resync|resyncAll|reload> [player]</red>",
       "noperms": "<red>You don't have permission to use this command.</red>",
-      "resync": "<green>Synchronization successful</green>"
+      "resync": "<green>Synchronization successful</green>",
+      "reload": "<green>Reloaded successfully</green><newline><yellow><b>Warning: </b>Some changes in the configuration requires server restart!<yellow>"
     },
     "message": ""
   }

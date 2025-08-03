@@ -3,6 +3,7 @@ package cz.bloodbear.discordLink.velocity.utils;
 
 import com.google.gson.*;
 import cz.bloodbear.discordLink.core.records.RoleEntry;
+import cz.bloodbear.discordLink.velocity.DiscordLink;
 import io.leangen.geantyref.TypeToken;
 
 import java.io.*;
@@ -21,8 +22,11 @@ public class JsonConfig {
     private final Path configPath;
     private JsonObject jsonData;
 
+    private final String filename;
+
     public JsonConfig(Path dataDirectory, String filename) {
         this.configPath = dataDirectory.resolve(filename);
+        this.filename = filename;
         createDefaultConfig(filename);
         load();
     }
@@ -38,6 +42,82 @@ public class JsonConfig {
         }
     }
 
+    private void mergeMessagesFromDefaults(String filename) {
+        JsonObject defaultMessages = loadDefaultMessages(filename);
+        JsonObject actualMessages = jsonData;
+
+        boolean changed = mergeJsonObjectsRecursive(actualMessages, defaultMessages);
+        if (changed) {
+            createBackup();
+            save();
+        }
+    }
+
+    private void createBackup() {
+        try {
+            Path backupDir = configPath.getParent().resolve("_backup");
+            Files.createDirectories(backupDir);
+
+            String timestamp = java.time.LocalDateTime.now()
+                    .toString()
+                    .replace(":", "-")
+                    .replace(".", "-");
+
+            String backupFileName = configPath.getFileName().toString().replace(".json", "") + "_" + timestamp + ".json";
+            Path backupFile = backupDir.resolve(backupFileName);
+
+            Files.copy(configPath, backupFile, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Config backup created: " + backupFile.toAbsolutePath());
+
+        } catch (IOException e) {
+            DiscordLink.getInstance().getLogger().error("An error occurred while creating config backup: {}", e.getMessage());
+        }
+    }
+
+
+    private boolean mergeJsonObjectsRecursive(JsonObject target, JsonObject source) {
+        boolean changed = false;
+
+        for (String key : source.keySet()) {
+            JsonElement sourceElement = source.get(key);
+
+            if (sourceElement.isJsonObject()) {
+                JsonObject targetChild;
+                if (target.has(key) && target.get(key).isJsonObject()) {
+                    targetChild = target.getAsJsonObject(key);
+                } else {
+                    targetChild = new JsonObject();
+                    target.add(key, targetChild);
+                    changed = true;
+                }
+
+                if (mergeJsonObjectsRecursive(targetChild, sourceElement.getAsJsonObject())) {
+                    changed = true;
+                }
+
+            } else {
+                if (!target.has(key)) {
+                    target.add(key, sourceElement);
+                    changed = true;
+                }
+            }
+        }
+
+        return changed;
+    }
+
+    private JsonObject loadDefaultMessages(String filename) {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filename)) {
+            if (inputStream != null) {
+                Reader reader = new java.io.InputStreamReader(inputStream);
+                return JsonParser.parseReader(reader).getAsJsonObject();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new JsonObject();
+    }
+
     public void load() {
         if (!Files.exists(configPath)) {
             createDefaultConfig(configPath.getFileName().toString());
@@ -45,10 +125,13 @@ public class JsonConfig {
 
         try (Reader reader = Files.newBufferedReader(configPath)) {
             jsonData = JsonParser.parseReader(reader).getAsJsonObject();
+            mergeMessagesFromDefaults(filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void reload() { load(); }
 
     public void save() {
         try (Writer writer = Files.newBufferedWriter(configPath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
