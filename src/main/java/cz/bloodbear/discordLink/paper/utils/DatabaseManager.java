@@ -77,6 +77,7 @@ public class DatabaseManager {
         if(player != null) {
             player.sendMessage(MiniMessage.miniMessage().deserialize(DiscordLink.getInstance().getMessage("command.discord.linked", player)));
         }
+        CustomCommandManager.InvokeLinkedCommands(uuid);
         DiscordLink.getInstance().getDiscordBot().syncRoles(uuid);
     }
 
@@ -94,7 +95,19 @@ public class DatabaseManager {
         return null;
     }
 
+    public boolean isDiscordAccountLinked(String id) {
+        String sql = "SELECT uuid FROM linked_accounts WHERE discord_id = ?;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
     public void unlinkAccount(String uuid) {
+        CustomCommandManager.InvokeUnlinkedCommands(uuid);
         DiscordLink.getInstance().getDiscordBot().removeSyncRoles(getDiscordAccount(uuid).id());
 
         String sql = "DELETE FROM linked_accounts WHERE uuid = ?;";
@@ -147,6 +160,25 @@ public class DatabaseManager {
             DiscordLink.getInstance().getLogger().severe(e.getMessage());
         }
         return null;
+    }
+
+    public void deleteLinkCodes(String uuid) {
+        String sql = "DELETE FROM link_requests WHERE uuid = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, uuid);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteLinkCodes() {
+        String sql = "DELETE FROM link_requests";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Map<String, String> getAllLinkedAccounts() {
