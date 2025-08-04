@@ -18,14 +18,17 @@ With DiscordLink, players can securely link their Minecraft accounts with Discor
   Designed specifically for Velocity to ensure minimal resource usage and fast response times.
 
 * 🧩 **PlaceholderAPI Support (only on Paper)**
-  Feel free to use placeholders from PlaceholderAPI. DiscordLink itself provides placeholders for Discord account name and id
+  Feel free to use placeholders from PlaceholderAPI. DiscordLink itself provides placeholders for Discord account name and id.
+
+* 🤖 **Event based commands**
+  You can define your own commands when someone links / unlinks their account. You can also use placeholders.
 
 ---
 
 ### 🔧 Requirements
 
-* Velocity Proxy Server
-* [LuckPerms](https://modrinth.com/plugin/luckperms) plugin on your Velocity server
+* Velocity or Paper Server
+* [LuckPerms](https://modrinth.com/plugin/luckperms) plugin on your server
 * Java 17 or newer
 * MySQL or MariaDB database
 * Open port for web server
