@@ -43,7 +43,7 @@ public class UpdateChecker {
                 JsonArray loaders = versionObj.getAsJsonArray("loaders");
                 for (JsonElement loader : loaders) {
                     if(loader.getAsString().equalsIgnoreCase(TARGET_LOADER)) {
-                        LATEST =versionObj.get("name").getAsString();
+                        LATEST = versionObj.get("version_number").getAsString();
                         return LATEST;
                     }
                 }
