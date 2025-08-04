@@ -26,5 +26,10 @@
       "token": "",
       "presence": "play.yourserver.com"
     }
+  },
+  "plugin": {
+    "updater": {
+      "enabled": true
+    }
   }
 }
