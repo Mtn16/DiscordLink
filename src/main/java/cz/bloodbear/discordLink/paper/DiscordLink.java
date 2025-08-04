@@ -1,6 +1,7 @@
 package cz.bloodbear.discordLink.paper;
 
 import com.google.inject.Inject;
+import cz.bloodbear.discordLink.core.utils.UpdateChecker;
 import cz.bloodbear.discordLink.paper.commands.DiscordAdminCommand;
 import cz.bloodbear.discordLink.paper.commands.DiscordCommand;
 import cz.bloodbear.discordLink.paper.discord.DiscordBot;
@@ -9,6 +10,7 @@ import cz.bloodbear.discordLink.paper.placeholders.DiscordUsernamePlaceholder;
 import cz.bloodbear.discordLink.paper.placeholders.PlayerNamePlaceholder;
 import cz.bloodbear.discordLink.core.records.RoleEntry;
 import cz.bloodbear.discordLink.paper.utils.*;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.luckperms.api.LuckPerms;
@@ -100,6 +102,9 @@ public class DiscordLink extends JavaPlugin {
         );
 
         loadPlaceholders();
+        if(config.getBoolean("plugin.updater.enabled", true)) {
+            checkVersion();
+        }
 
         try {
             webServer.start();
@@ -122,6 +127,16 @@ public class DiscordLink extends JavaPlugin {
                 config.getString("discord.bot.presence", "MC Sync")
         );
         this.luckPerms = LuckPermsProvider.get();
+
+        databaseManager.deleteLinkCodes();
+    }
+
+    private void checkVersion() {
+        String pluginVersion = getServer().getPluginManager().getPlugin("discordlink").getDescription().getVersion();
+        UpdateChecker updateChecker = new UpdateChecker(pluginVersion, "paper");
+        if(updateChecker.isNewerVersionAvailable()) {
+            getServer().getConsoleSender().sendMessage(miniMessage.deserialize("<yellow><b>Update notification:</b></yellow> <green>A DiscordLink update is available!</green> <newline><newline><yellow>Your version:</yellow> <green>"+ pluginVersion +"</green><newline><yellow>Latest version:</yellow> <green>" + updateChecker.getLatestVersion() + "</green>"));
+        }
     }
 
     private void loadPlaceholders() {
@@ -155,7 +170,12 @@ public class DiscordLink extends JavaPlugin {
     }
 
     public @NotNull String getMessage(String key, Player player) {
-        return PlaceholderRegistry.replacePlaceholders(messages.getString(key, "<red>Unknown message: " + key + "</red>"), player);
+        String input = messages.getString(key, "<red>Unknown message: " + key + "</red>");
+        String temp = PlaceholderRegistry.replacePlaceholders(input, player);
+        if(isPlaceholderAPIEnabled()) {
+            temp = PlaceholderAPI.setPlaceholders(player, temp);
+        }
+        return PlaceholderRegistry.replacePlaceholders(temp, player);
     }
 
     public HtmlPage getHtmlPage(String name) {
@@ -201,5 +221,9 @@ public class DiscordLink extends JavaPlugin {
         commands.reload();
 
         loadHTML();
+    }
+
+    public JsonConfig getCommands() {
+        return commands;
     }
 }
