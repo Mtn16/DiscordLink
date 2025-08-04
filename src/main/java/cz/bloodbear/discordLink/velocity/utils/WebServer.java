@@ -91,6 +91,16 @@ public class WebServer {
                 return;
             }
 
+            if(DiscordLink.getInstance().getDatabaseManager().isDiscordAccountLinked(discordAccount.id())) {
+                sendHtmlResponse(exchange, 400, DiscordLink.getInstance().getHtmlPage("alreadylinked").getContent());
+                return;
+            }
+
+            if(DiscordLink.getInstance().getDatabaseManager().isLinked(uuid)) {
+                sendHtmlResponse(exchange, 400, cz.bloodbear.discordLink.velocity.DiscordLink.getInstance().getHtmlPage("alreadylinked").getContent());
+                return;
+            }
+
             DiscordLink.getInstance().getDatabaseManager().linkAccount(uuid, discordAccount.id(), discordAccount.username());
             sendHtmlResponse(exchange, 200, DiscordLink.getInstance().getHtmlPage("linked").getContent());
         }
