@@ -15,10 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class JsonConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -214,7 +211,7 @@ public class JsonConfig {
             Type listType = new TypeToken<List<String>>() {}.getType();
             return GSON.fromJson(section.get(key), listType);
         }
-        return null;
+        return Collections.emptyList();
     }
 
     public List<RoleEntry> getRoles(String path) {
