@@ -11,6 +11,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import cz.bloodbear.discordLink.core.utils.UpdateChecker;
 import cz.bloodbear.discordLink.velocity.commands.DiscordAdminCommand;
 import cz.bloodbear.discordLink.velocity.commands.DiscordCommand;
 import cz.bloodbear.discordLink.velocity.discord.DiscordBot;
@@ -111,6 +112,17 @@ public class DiscordLink {
         );
 
         loadPlaceholders();
+        if(config.getBoolean("plugin.updater.enabled", true)) {
+            checkVersion();
+        }
+    }
+
+    private void checkVersion() {
+        String pluginVersion = getServer().getPluginManager().getPlugin("discordlink").get().getDescription().getVersion().get();
+        UpdateChecker updateChecker = new UpdateChecker(pluginVersion, "velocity");
+        if(updateChecker.isNewerVersionAvailable()) {
+            getServer().getConsoleCommandSource().sendMessage(miniMessage.deserialize("<yellow><b>Update notification:</b></yellow> <green>A DiscordLink update is available!</green> <newline><newline><yellow>Your version:</yellow> <green>"+ pluginVersion +"</green><newline><yellow>Latest version:</yellow> <green>" + updateChecker.getLatestVersion() + "</green>"));
+        }
     }
 
     private void loadPlaceholders() {
@@ -154,6 +166,8 @@ public class DiscordLink {
                 config.getString("discord.bot.presence", "MC Sync")
         );
         this.luckPerms = LuckPermsProvider.get();
+
+        databaseManager.deleteLinkCodes();
     }
 
     @Subscribe
@@ -212,5 +226,9 @@ public class DiscordLink {
         commands.reload();
 
         loadHTML();
+    }
+
+    public JsonConfig getCommands() {
+        return commands;
     }
 }
