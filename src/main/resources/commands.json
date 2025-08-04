@@ -1,0 +1,10 @@
+{
+  "__example": [
+    "--disabled Lines prefixed with --disabled are disabled",
+    "Start each line with prefix that determines the command executor",
+    "Console command example: {CONSOLE} say Hello from server!",
+    "Player command example: {PLAYER} say Hello from player!"
+  ],
+  "linked": [],
+  "unlinked": []
+}
