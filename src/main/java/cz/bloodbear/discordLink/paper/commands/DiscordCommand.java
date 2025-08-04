@@ -43,6 +43,7 @@ public class DiscordCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
+            databaseManager.deleteLinkCodes(player.getUniqueId().toString());
             String code = CodeGenerator.generateCode();
             databaseManager.saveLinkRequest(player.getUniqueId().toString(), code);
             String url = DiscordUtils.getOAuthLink(DiscordLink.getInstance().getClientId(), DiscordLink.getInstance().getRedirectUri(), code);
