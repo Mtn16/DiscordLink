@@ -18,7 +18,7 @@ public class DiscordAdminCommand implements SimpleCommand {
         String[] args = invocation.arguments();
 
         if((source instanceof Player) && !LuckPermsProvider.get().getUserManager().getUser(((Player)invocation.source()).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.admin").asBoolean()) {
-            source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.noperms")));
+            source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.noperms", (Player) invocation.source())));
             return;
         }
 
