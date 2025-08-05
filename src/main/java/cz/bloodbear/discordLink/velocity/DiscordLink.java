@@ -12,9 +12,11 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import cz.bloodbear.discordLink.core.utils.UpdateChecker;
+import cz.bloodbear.discordLink.core.utils.VersionConstants;
 import cz.bloodbear.discordLink.velocity.commands.DiscordAdminCommand;
 import cz.bloodbear.discordLink.velocity.commands.DiscordCommand;
 import cz.bloodbear.discordLink.velocity.discord.DiscordBot;
+import cz.bloodbear.discordLink.velocity.events.PlayerConnection;
 import cz.bloodbear.discordLink.velocity.placeholders.DiscordIdPlaceholder;
 import cz.bloodbear.discordLink.velocity.placeholders.DiscordUsernamePlaceholder;
 import cz.bloodbear.discordLink.velocity.placeholders.PlayerNamePlaceholder;
@@ -31,12 +33,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-@Plugin(id = "discordlink", name = "DiscordLink", version = "25.5",
+/*@Plugin(id = "discordlink", name = "DiscordLink", version = VersionConstants.VERSION,
         authors = {"Mtn16"}, url = "https://github.com/Mtn16/DiscordLink",
         description = "A Velocity plugin for Discord integration.",
         dependencies = {
             @Dependency(id = "luckperms", optional = false)
-        })
+        })*/
 public class DiscordLink {
     private static DiscordLink instance;
 
@@ -78,6 +80,8 @@ public class DiscordLink {
         this.sync = new JsonConfig(dataDirectory, "sync.json");
         this.commands = new JsonConfig(dataDirectory, "commands.json");
         this.miniMessage = MiniMessage.miniMessage();
+
+        server.getEventManager().register(this, new PlayerConnection());
 
         loadHTML();
 

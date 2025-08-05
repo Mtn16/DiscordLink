@@ -5,6 +5,7 @@ import cz.bloodbear.discordLink.core.utils.UpdateChecker;
 import cz.bloodbear.discordLink.paper.commands.DiscordAdminCommand;
 import cz.bloodbear.discordLink.paper.commands.DiscordCommand;
 import cz.bloodbear.discordLink.paper.discord.DiscordBot;
+import cz.bloodbear.discordLink.paper.events.PlayerConnection;
 import cz.bloodbear.discordLink.paper.placeholders.DiscordIdPlaceholder;
 import cz.bloodbear.discordLink.paper.placeholders.DiscordUsernamePlaceholder;
 import cz.bloodbear.discordLink.paper.placeholders.PlayerNamePlaceholder;
@@ -68,6 +69,8 @@ public class DiscordLink extends JavaPlugin {
         this.sync = new JsonConfig(dataDirectory, "sync.json");
         this.commands = new JsonConfig(dataDirectory, "commands.json");
         this.miniMessage = MiniMessage.miniMessage();
+
+        getServer().getPluginManager().registerEvents(new PlayerConnection(), this);
 
         loadHTML();
 
