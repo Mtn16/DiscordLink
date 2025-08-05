@@ -1,0 +1,12 @@
+name: DiscordLink
+version: ${project.version}
+entry: cz.bloodbear.discordLink.paper.DiscordLink
+api-version: 1.20
+authors:
+  - Mtn16
+website: https://github.com/Mtn16/DiscordLink
+dependencies:
+  - name: LuckPerms
+    required: true
+  - name: PlaceholderAPI
+    required: false
