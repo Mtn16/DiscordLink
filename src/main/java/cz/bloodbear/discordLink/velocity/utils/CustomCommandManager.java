@@ -9,8 +9,7 @@ import java.util.UUID;
 
 public class CustomCommandManager {
     public static void InvokeLinkedCommands(String uuid) {
-        new Thread(() -> {
-            for (String command : DiscordLink.getInstance().getCommands().getStringList("linked")) {
+            for (String command : DiscordLink.getInstance().getCommands().getStringList("commands.linked")) {
                 if(command.startsWith("--disabled")) continue;
 
                 if(command.startsWith("{CONSOLE} ")) {
@@ -32,29 +31,38 @@ public class CustomCommandManager {
                                 finalCommand
                         );
                     });
+                } else {
+                    DiscordLink.getInstance().getLogger().warn("Unknown command type: " + command);
                 }
             }
-        }).start();
     }
 
     public static void InvokeUnlinkedCommands(String uuid) {
-        new Thread(() -> {
-            for (String command : DiscordLink.getInstance().getCommands().getStringList("unlinked")) {
+            for (String command : DiscordLink.getInstance().getCommands().getStringList("commands.unlinked")) {
                 if(command.startsWith("--disabled")) continue;
 
-                if(command.startsWith("[CONSOLE] ")) {
+                if(command.startsWith("{CONSOLE} ")) {
+                    String finalCommand = StringUtils.splitByString(command, "{CONSOLE} ")[1];
+                    Optional<Player> player = DiscordLink.getInstance().getServer().getPlayer(UUID.fromString(uuid));
+                    if(player.isPresent()) {
+                        finalCommand = PlaceholderRegistry.replacePlaceholders(command, player.get());
+                    }
                     DiscordLink.getInstance().getServer().getCommandManager().executeAsync(
                             DiscordLink.getInstance().getServer().getConsoleCommandSource(),
-                            command.split("[CONSOLE] ")[1]
+                            finalCommand
                     );
-                } else if (command.startsWith("[PLAYER] ")) {
+                } else if (command.startsWith("{PLAYER} ")) {
                     Optional<Player> player = DiscordLink.getInstance().getServer().getPlayer(UUID.fromString(uuid));
-                    player.ifPresent(presentPlayer -> DiscordLink.getInstance().getServer().getCommandManager().executeAsync(
-                            presentPlayer,
-                            command.split("[PLAYER] ")[1]
-                    ));
+                    player.ifPresent(presentPlayer -> {
+                        String finalCommand = PlaceholderRegistry.replacePlaceholders(StringUtils.splitByString(command, "{PLAYER} ")[1], presentPlayer);
+                        DiscordLink.getInstance().getServer().getCommandManager().executeAsync(
+                                presentPlayer,
+                                finalCommand
+                        );
+                    });
+                } else {
+                    DiscordLink.getInstance().getLogger().warn("Unknown command type: " + command);
                 }
             }
-        }).start();
     }
 }

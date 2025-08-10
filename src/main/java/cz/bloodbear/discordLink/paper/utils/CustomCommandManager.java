@@ -9,19 +9,18 @@ import java.util.UUID;
 
 public class CustomCommandManager {
     public static void InvokeLinkedCommands(String uuid) {
-        new Thread(() -> {
-            for (String command : DiscordLink.getInstance().getCommands().getStringList("linked")) {
+            for (String command : DiscordLink.getInstance().getCommands().getStringList("commands.linked")) {
                 if(command.startsWith("--disabled")) continue;
 
                 if(command.startsWith("{CONSOLE} ")) {
                     Player player = DiscordLink.getInstance().getServer().getPlayer(UUID.fromString(uuid));
                     String finalCommand = PlaceholderRegistry.replacePlaceholders(StringUtils.splitByString(command, "{CONSOLE} ")[1], player);
                     if(DiscordLink.getInstance().isPlaceholderAPIEnabled()) {
-                        PlaceholderAPI.setPlaceholders(player, finalCommand);
+                        finalCommand = PlaceholderAPI.setPlaceholders(player, finalCommand);
                     }
                     DiscordLink.getInstance().getServer().dispatchCommand(
                             DiscordLink.getInstance().getServer().getConsoleSender(),
-                            StringUtils.splitByString(finalCommand, "{CONSOLE} ")[1]
+                            finalCommand
                     );
                 } else if (command.startsWith("{PLAYER} ")) {
                     Player player = DiscordLink.getInstance().getServer().getPlayer(UUID.fromString(uuid));
@@ -35,31 +34,41 @@ public class CustomCommandManager {
                                 finalCommand
                         );
                     }
+                } else {
+                    DiscordLink.getInstance().getLogger().warning("Unknown command type: " + command);
                 }
             }
-        }).start();
     }
 
     public static void InvokeUnlinkedCommands(String uuid) {
-        new Thread(() -> {
-            for (String command : DiscordLink.getInstance().getCommands().getStringList("unlinked")) {
+            for (String command : DiscordLink.getInstance().getCommands().getStringList("commands.unlinked")) {
                 if(command.startsWith("--disabled")) continue;
 
-                if(command.startsWith("[CONSOLE] ")) {
+                if(command.startsWith("{CONSOLE} ")) {
+                    Player player = DiscordLink.getInstance().getServer().getPlayer(UUID.fromString(uuid));
+                    String finalCommand = PlaceholderRegistry.replacePlaceholders(StringUtils.splitByString(command, "{CONSOLE} ")[1], player);
+                    if(DiscordLink.getInstance().isPlaceholderAPIEnabled()) {
+                        finalCommand = PlaceholderAPI.setPlaceholders(player, finalCommand);
+                    }
                     DiscordLink.getInstance().getServer().dispatchCommand(
                             DiscordLink.getInstance().getServer().getConsoleSender(),
-                            command.split("[CONSOLE] ")[1]
+                            finalCommand
                     );
-                } else if (command.startsWith("[PLAYER] ")) {
+                } else if (command.startsWith("{PLAYER} ")) {
                     Player player = DiscordLink.getInstance().getServer().getPlayer(UUID.fromString(uuid));
+                    String finalCommand = PlaceholderRegistry.replacePlaceholders(StringUtils.splitByString(command, "{CONSOLE} ")[1], player);
+                    if(DiscordLink.getInstance().isPlaceholderAPIEnabled()) {
+                        PlaceholderAPI.setPlaceholders(player, finalCommand);
+                    }
                     if(player != null && player.isOnline()) {
                         DiscordLink.getInstance().getServer().dispatchCommand(
                                 player,
-                                command.split("[PLAYER] ")[1]
+                                finalCommand
                         );
                     }
+                } else {
+                    DiscordLink.getInstance().getLogger().warning("Unknown command type: " + command);
                 }
             }
-        }).start();
     }
 }
