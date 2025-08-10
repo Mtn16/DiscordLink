@@ -8,8 +8,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerConnection implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        DiscordLink.getInstance().getDiscordBot().syncRoles(
-                event.getPlayer().getUniqueId().toString()
-        );
+        if(DiscordLink.getInstance().getDatabaseManager().isLinked(event.getPlayer().getUniqueId().toString())) {
+            DiscordLink.getInstance().getDiscordBot().syncRoles(
+                    event.getPlayer().getUniqueId().toString()
+            );
+        }
     }
 }

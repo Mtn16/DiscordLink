@@ -8,8 +8,10 @@ public class PlayerConnection {
 
     @Subscribe
     public void onLogin(PlayerLoginEvent event) {
-        DiscordLink.getInstance().getDiscordBot().syncRoles(
-                event.getPlayer().getUniqueId().toString()
-        );
+        if(DiscordLink.getInstance().getDatabaseManager().isLinked(event.getPlayer().getUniqueId().toString())) {
+            DiscordLink.getInstance().getDiscordBot().syncRoles(
+                    event.getPlayer().getUniqueId().toString()
+            );
+        }
     }
 }
