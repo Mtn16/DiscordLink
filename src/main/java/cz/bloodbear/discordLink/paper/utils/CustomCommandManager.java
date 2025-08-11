@@ -41,7 +41,9 @@ public class CustomCommandManager {
     }
 
     public static void InvokeUnlinkedCommands(String uuid) {
+        System.out.println("invoke");
             for (String command : DiscordLink.getInstance().getCommands().getStringList("commands.unlinked")) {
+                System.out.println(command);
                 if(command.startsWith("--disabled")) continue;
 
                 if(command.startsWith("{CONSOLE} ")) {

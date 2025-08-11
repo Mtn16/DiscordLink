@@ -16,7 +16,7 @@ public class CustomCommandManager {
                     String finalCommand = StringUtils.splitByString(command, "{CONSOLE} ")[1];
                     Optional<Player> player = DiscordLink.getInstance().getServer().getPlayer(UUID.fromString(uuid));
                     if(player.isPresent()) {
-                        finalCommand = PlaceholderRegistry.replacePlaceholders(command, player.get());
+                        finalCommand = PlaceholderRegistry.replacePlaceholders(finalCommand, player.get());
                     }
                     DiscordLink.getInstance().getServer().getCommandManager().executeAsync(
                             DiscordLink.getInstance().getServer().getConsoleCommandSource(),
@@ -38,15 +38,18 @@ public class CustomCommandManager {
     }
 
     public static void InvokeUnlinkedCommands(String uuid) {
+            System.out.println("invoke");
             for (String command : DiscordLink.getInstance().getCommands().getStringList("commands.unlinked")) {
+                System.out.println(command);
                 if(command.startsWith("--disabled")) continue;
 
                 if(command.startsWith("{CONSOLE} ")) {
                     String finalCommand = StringUtils.splitByString(command, "{CONSOLE} ")[1];
                     Optional<Player> player = DiscordLink.getInstance().getServer().getPlayer(UUID.fromString(uuid));
                     if(player.isPresent()) {
-                        finalCommand = PlaceholderRegistry.replacePlaceholders(command, player.get());
+                        finalCommand = PlaceholderRegistry.replacePlaceholders(finalCommand, player.get());
                     }
+                    System.out.println(finalCommand);
                     DiscordLink.getInstance().getServer().getCommandManager().executeAsync(
                             DiscordLink.getInstance().getServer().getConsoleCommandSource(),
                             finalCommand
