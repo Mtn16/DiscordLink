@@ -106,7 +106,7 @@ public class DiscordBot extends ListenerAdapter {
                     Role guildRole = guild.getRoleById(role.roleId());
                     if(hasPermission(uuid, role.permission())) {
                         guild.addRoleToMember(member, guildRole).queue();
-                        System.out.println("Adding role " + guildRole.getName() + " to " + member.getUser().getGlobalName());
+                        //System.out.println("Adding role " + guildRole.getName() + " to " + member.getUser().getGlobalName());
 
                     } else {
                         guild.removeRoleFromMember(member, guildRole).queue();
