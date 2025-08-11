@@ -6,6 +6,9 @@ import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
+import com.velocitypowered.api.plugin.Dependency;
+import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -30,12 +33,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-/*@Plugin(id = "discordlink", name = "DiscordLink", version = VersionConstants.VERSION,
+@Plugin(id = "discordlink", name = "DiscordLink", version = "25.5",
         authors = {"Mtn16"}, url = "https://github.com/Mtn16/DiscordLink",
         description = "A Velocity plugin for Discord integration.",
         dependencies = {
             @Dependency(id = "luckperms", optional = false)
-        })*/
+        })
 public class DiscordLink {
     private static DiscordLink instance;
 
@@ -43,6 +46,7 @@ public class DiscordLink {
     private final Logger logger;
     private final ProxyServer server;
     private final Path dataDirectory;
+    private final PluginContainer container;
 
     private final JsonConfig config;
     private final JsonConfig messages;
@@ -65,20 +69,19 @@ public class DiscordLink {
     private LuckPerms luckPerms;
 
     @Inject
-    public DiscordLink(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
+    public DiscordLink(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, PluginContainer container) {
         instance = this;
 
         this.server = server;
         this.logger = logger;
         this.dataDirectory = dataDirectory;
+        this.container = container;
 
         this.config = new JsonConfig(dataDirectory, "config.json");
         this.messages = new JsonConfig(dataDirectory, "messages.json");
         this.sync = new JsonConfig(dataDirectory, "sync.json");
         this.commands = new JsonConfig(dataDirectory, "commands.json");
         this.miniMessage = MiniMessage.miniMessage();
-
-        server.getEventManager().register(this, new PlayerConnection());
 
         loadHTML();
 
@@ -113,9 +116,6 @@ public class DiscordLink {
         );
 
         loadPlaceholders();
-        if(config.getBoolean("plugin.updater.enabled", true)) {
-            checkVersion();
-        }
     }
 
     private void checkVersion() {
@@ -149,13 +149,14 @@ public class DiscordLink {
             server.shutdown();
         }
 
+        server.getEventManager().register(this, new PlayerConnection());
         CommandManager commandManager = server.getCommandManager();
         CommandMeta discordCommandMeta = commandManager.metaBuilder("discord")
-                .plugin(this)
+                .plugin(container)
                 .build();
 
         CommandMeta adminCommandMeta = commandManager.metaBuilder("discordadmin")
-                .plugin(this)
+                .plugin(container)
                 .build();
 
         commandManager.register(discordCommandMeta, new DiscordCommand());
@@ -169,6 +170,10 @@ public class DiscordLink {
         this.luckPerms = LuckPermsProvider.get();
 
         databaseManager.deleteLinkCodes();
+
+        if(config.getBoolean("plugin.updater.enabled", true)) {
+            checkVersion();
+        }
     }
 
     @Subscribe
