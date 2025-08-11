@@ -17,20 +17,22 @@ public class DiscordAdminCommand implements SimpleCommand {
         CommandSource source = invocation.source();
         String[] args = invocation.arguments();
 
-        if((source instanceof Player) && !LuckPermsProvider.get().getUserManager().getUser(((Player)invocation.source()).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.admin").asBoolean()) {
-            source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.noperms", (Player) invocation.source())));
-            return;
+        if((source instanceof Player)) {
+            if(!LuckPermsProvider.get().getUserManager().getUser(((Player)invocation.source()).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.admin").asBoolean()) {
+                source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.noperms", (Player) invocation.source())));
+                return;
+            }
         }
 
         if(args.length == 0) {
-            source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.usage", (Player) invocation.source())));
+            source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.usage")));
             return;
         }
 
 
         if(args[0].equalsIgnoreCase("resync")) {
             if(args.length != 2) {
-                source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.usage", (Player) invocation.source())));
+                source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.usage")));
                 return;
             }
 

@@ -26,9 +26,11 @@ public class DiscordAdminCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] args) {
 
-        if((commandSender instanceof Player) && !LuckPermsProvider.get().getUserManager().getUser(((Player)commandSender).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.admin").asBoolean()) {
-            commandSender.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.noperms")));
-            return true;
+        if((commandSender instanceof Player)) {
+            if(!LuckPermsProvider.get().getUserManager().getUser(((Player)commandSender).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.admin").asBoolean()) {
+                commandSender.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.noperms")));
+                return true;
+            }
         }
 
         if(args.length == 0) {
