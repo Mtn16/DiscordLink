@@ -92,12 +92,12 @@ public class WebServer {
             }
 
             if(DiscordLink.getInstance().getDatabaseManager().isDiscordAccountLinked(discordAccount.id())) {
-                sendHtmlResponse(exchange, 400, cz.bloodbear.discordLink.velocity.DiscordLink.getInstance().getHtmlPage("alreadylinked").getContent());
+                sendHtmlResponse(exchange, 400, DiscordLink.getInstance().getHtmlPage("alreadylinked").getContent());
                 return;
             }
 
             if(DiscordLink.getInstance().getDatabaseManager().isLinked(uuid)) {
-                sendHtmlResponse(exchange, 400, cz.bloodbear.discordLink.velocity.DiscordLink.getInstance().getHtmlPage("alreadylinked").getContent());
+                sendHtmlResponse(exchange, 400, DiscordLink.getInstance().getHtmlPage("alreadylinked").getContent());
                 return;
             }
 
