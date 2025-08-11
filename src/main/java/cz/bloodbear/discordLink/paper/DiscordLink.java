@@ -45,6 +45,7 @@ public class DiscordLink extends JavaPlugin {
     private HtmlPage missingCodePage;
     private HtmlPage missingStatePage;
     private HtmlPage invalidPage;
+    private HtmlPage alreadyLinkedPage;
     private String redirect;
 
     private DatabaseManager databaseManager;
@@ -158,6 +159,7 @@ public class DiscordLink extends JavaPlugin {
         this.missingCodePage = new HtmlPage(dataDirectory, "missingCode.html");
         this.missingStatePage = new HtmlPage(dataDirectory, "missingState.html");
         this.invalidPage = new HtmlPage(dataDirectory, "invalid.html");
+        this.alreadyLinkedPage = new HtmlPage(dataDirectory, "alreadylinked.html");
     }
 
     @Override
@@ -192,6 +194,8 @@ public class DiscordLink extends JavaPlugin {
             return invalidPage;
         } else if (name.equalsIgnoreCase("failed")) {
             return failedPage;
+        } else if (name.equalsIgnoreCase("alreadylinked")) {
+            return alreadyLinkedPage;
         }
         return null;
     }
