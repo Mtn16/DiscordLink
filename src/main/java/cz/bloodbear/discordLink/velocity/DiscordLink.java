@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-@Plugin(id = "discordlink", name = "DiscordLink", version = "25.5",
+@Plugin(id = "discordlink", name = "DiscordLink", version = "25.6",
         authors = {"Mtn16"}, url = "https://github.com/Mtn16/DiscordLink",
         description = "A Velocity plugin for Discord integration.",
         dependencies = {
@@ -59,6 +59,7 @@ public class DiscordLink {
     private HtmlPage missingCodePage;
     private HtmlPage missingStatePage;
     private HtmlPage invalidPage;
+    private HtmlPage alreadyLinkedPage;
     private final String redirect;
 
     private final DatabaseManager databaseManager;
@@ -138,6 +139,7 @@ public class DiscordLink {
         this.missingCodePage = new HtmlPage(dataDirectory, "missingCode.html");
         this.missingStatePage = new HtmlPage(dataDirectory, "missingState.html");
         this.invalidPage = new HtmlPage(dataDirectory, "invalid.html");
+        this.alreadyLinkedPage = new HtmlPage(dataDirectory, "alreadylinked.html");
     }
 
     @Subscribe
@@ -203,6 +205,8 @@ public class DiscordLink {
             return invalidPage;
         } else if (name.equalsIgnoreCase("failed")) {
             return failedPage;
+        } else if (name.equalsIgnoreCase("alreadylinked")) {
+            return alreadyLinkedPage;
         }
         return null;
     }
