@@ -31,6 +31,18 @@ public class DiscordBot extends ListenerAdapter {
                 .build();
     }
 
+    public JDA getJdaInstance() {
+        return jda;
+    }
+
+    public String getGuildId() {
+        return guildId;
+    }
+
+    public String getClientId() {
+        return DiscordLink.getInstance().getClientId();
+    }
+
     @Override
     public void onReady(@NotNull ReadyEvent event) {
         DiscordLink.getInstance().getLogger().info(ConsoleColor.green("Bot ready!"));
