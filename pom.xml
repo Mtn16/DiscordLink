@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cz.bloodbear</groupId>
     <artifactId>DiscordLink</artifactId>
-    <version>25.5</version>
+    <version>25.6</version>
     <packaging>jar</packaging>
     <name>DiscordLink</name>
     <properties>
