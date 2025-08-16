@@ -3,6 +3,7 @@ package cz.bloodbear.discordLink.velocity.discord;
 import cz.bloodbear.discordLink.velocity.DiscordLink;
 import cz.bloodbear.discordLink.core.records.RoleEntry;
 import cz.bloodbear.discordLink.core.utils.ConsoleColor;
+import cz.bloodbear.discordLink.velocity.discord.listeners.SlashCommandListener;
 import cz.bloodbear.discordLink.velocity.utils.DatabaseManager;
 import cz.bloodbear.discordLink.core.utils.DiscordUtils;
 import net.dv8tion.jda.api.JDA;
@@ -29,6 +30,7 @@ public class DiscordBot extends ListenerAdapter {
         this.jda = JDABuilder.createDefault(token)
                 .addEventListeners(this)
                 .setActivity(Activity.customStatus(presence))
+                .addEventListeners(new SlashCommandListener())
                 .build();
     }
 

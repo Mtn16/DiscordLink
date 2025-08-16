@@ -52,6 +52,7 @@ public class DiscordLink {
     private final JsonConfig messages;
     private final JsonConfig sync;
     private final JsonConfig commands;
+    private final JsonConfig discordConfig;
     private final MiniMessage miniMessage;
 
     private HtmlPage linkedPage;
@@ -82,6 +83,7 @@ public class DiscordLink {
         this.messages = new JsonConfig(dataDirectory, "messages.json");
         this.sync = new JsonConfig(dataDirectory, "sync.json");
         this.commands = new JsonConfig(dataDirectory, "commands.json");
+        this.discordConfig = new JsonConfig(dataDirectory, "discord.json");
         this.miniMessage = MiniMessage.miniMessage();
 
         loadHTML();
@@ -234,6 +236,7 @@ public class DiscordLink {
         messages.reload();
         sync.reload();
         commands.reload();
+        discordConfig.reload();
 
         loadHTML();
     }
@@ -241,4 +244,5 @@ public class DiscordLink {
     public JsonConfig getCommands() {
         return commands;
     }
+    public JsonConfig getDiscordConfig() { return discordConfig; }
 }

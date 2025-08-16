@@ -5,11 +5,14 @@ import cz.bloodbear.discordLink.core.records.RoleEntry;
 import cz.bloodbear.discordLink.core.utils.ConsoleColor;
 import cz.bloodbear.discordLink.paper.utils.DatabaseManager;
 import cz.bloodbear.discordLink.core.utils.DiscordUtils;
+import cz.bloodbear.discordLink.paper.utils.JsonConfig;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class DiscordBot extends ListenerAdapter {
+    private static DiscordBot instance;
     private final JDA jda;
     private final DatabaseManager databaseManager;
     private final String guildId;
@@ -29,7 +33,28 @@ public class DiscordBot extends ListenerAdapter {
                 .addEventListeners(this)
                 .setActivity(Activity.customStatus(presence))
                 .build();
+
+        updateCommands();
+        instance = this;
     }
+
+
+    public void updateCommands() {
+        JsonConfig config = DiscordLink.getInstance().getDiscordConfig();
+        getGuild().updateCommands().addCommands(
+                Commands.slash(config.getString("commands.unlink.name", "unlink"), config.getString("commands.unlink.description", "Unlinks your Discord account from linked Minecraft server account.")),
+                Commands.slash(config.getString("commands.admin.name", "admin"), config.getString("commands.admin.description", "DiscordLink admin command"))
+                        .addSubcommands(
+                                new SubcommandData(config.getString("commands.admin.subcommands.unlink.name", "unlink"), config.getString("commands.admin.subcommands.unlink.description", "Unlinks selected account from linked Minecraft server account."))
+                        )
+        );
+    }
+
+    public Guild getGuild() {
+        return jda.getGuildById(guildId);
+    }
+
+    public static DiscordBot getInstance() { return instance; }
 
     public JDA getJdaInstance() {
         return jda;

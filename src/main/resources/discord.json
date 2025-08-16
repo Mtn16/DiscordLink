@@ -1,0 +1,31 @@
+{
+  "commands": {
+    "unlink": {
+      "name": "unlink",
+      "description": "Unlinks your Discord account from linked Minecraft server account.",
+      "responses": {
+        "not_linked": "Your account is not linked to any Minecraft account.",
+        "no_permission": "You do not have permission to unlink your account.",
+        "success": "Your account has been unlinked successfully"
+      }
+    },
+    "admin": {
+      "name": "admin",
+      "description": "DiscordLink admin command.",
+      "subcommands": {
+        "unlink": {
+          "name": "unlink",
+          "description": "Unlinks selected account from linked Minecraft server account.",
+          "arguments": [
+            {
+
+            }
+          ]
+        }
+      }
+    },
+    "unknown": {
+      "response": "Unknown command."
+    }
+  }
+}

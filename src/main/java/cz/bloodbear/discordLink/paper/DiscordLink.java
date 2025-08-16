@@ -38,6 +38,7 @@ public class DiscordLink extends JavaPlugin {
     private JsonConfig messages;
     private JsonConfig sync;
     private JsonConfig commands;
+    private JsonConfig discordConfig;
     private MiniMessage miniMessage;
 
     private HtmlPage linkedPage;
@@ -69,6 +70,7 @@ public class DiscordLink extends JavaPlugin {
         this.messages = new JsonConfig(dataDirectory, "messages.json");
         this.sync = new JsonConfig(dataDirectory, "sync.json");
         this.commands = new JsonConfig(dataDirectory, "commands.json");
+        this.discordConfig = new JsonConfig(dataDirectory, "discord.json");
         this.miniMessage = MiniMessage.miniMessage();
 
         getServer().getPluginManager().registerEvents(new PlayerConnection(), this);
@@ -226,11 +228,16 @@ public class DiscordLink extends JavaPlugin {
         messages.reload();
         sync.reload();
         commands.reload();
+        discordConfig.reload();
 
         loadHTML();
     }
 
     public JsonConfig getCommands() {
         return commands;
+    }
+
+    public JsonConfig getDiscordConfig() {
+        return discordConfig;
     }
 }

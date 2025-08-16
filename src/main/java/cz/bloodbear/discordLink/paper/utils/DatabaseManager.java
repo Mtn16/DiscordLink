@@ -162,6 +162,20 @@ public class DatabaseManager {
         return null;
     }
 
+    public UUID getPlayerByDiscord(String discordId) {
+        String query = "SELECT uuid FROM linked_accounts WHERE discord_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, discordId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return UUID.fromString(rs.getString("uuid"));
+            }
+        } catch (SQLException e) {
+            DiscordLink.getInstance().getLogger().severe(e.getMessage());
+        }
+        return null;
+    }
+
     public void deleteLinkCodes(String uuid) {
         String sql = "DELETE FROM link_requests WHERE uuid = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
