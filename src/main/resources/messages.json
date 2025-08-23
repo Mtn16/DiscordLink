@@ -14,7 +14,8 @@
       "notlinked": "<red>Your account is not linked.</red>",
       "unlinked": "<green>Your account was unlinked successfully.</green>",
       "info": "<blue>Your account is linked to Discord account [discordUsername] ([discordId])</blue>",
-      "link": "<blue>Link your account <underlined><click:open_url:'[linkUrl]'>here</click></underlined></blue>"
+      "link": "<blue>Link your account <underlined><click:open_url:'[linkUrl]'>here</click></underlined></blue>",
+      "noperms": "<red>You don't have permission to use this command.</red>"
     },
     "admin": {
       "usage": "<red>Usage: /discordadmin <resync|resyncAll|reload> [player]</red>",
