@@ -17,3 +17,22 @@ commands:
   discord:
     description: DiscordLink admin command
     usage: /discord [link|unlink|info]
+
+permissions:
+  discordlink.player:
+    default: notop
+  discordlink.player.link:
+    default: notop
+  discordlink.player.unlink:
+    default: notop
+  discordlink.player.info:
+    default: notop
+
+  discordlink.admin:
+    default: op
+  discordlink.admin.reload:
+    default: op
+  discordlink.admin.resync:
+    default: op
+  discordlink.admin.resyncall:
+    default: op
