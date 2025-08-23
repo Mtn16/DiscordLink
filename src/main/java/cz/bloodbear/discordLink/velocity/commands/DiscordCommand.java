@@ -2,13 +2,17 @@ package cz.bloodbear.discordLink.velocity.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
+import com.velocitypowered.api.proxy.ConsoleCommandSource;
 import com.velocitypowered.api.proxy.Player;
+import cz.bloodbear.discordLink.core.utils.TabCompleterHelper;
 import cz.bloodbear.discordLink.velocity.DiscordLink;
 import cz.bloodbear.discordLink.core.utils.CodeGenerator;
 import cz.bloodbear.discordLink.velocity.utils.DatabaseManager;
 import cz.bloodbear.discordLink.core.utils.DiscordUtils;
 import cz.bloodbear.discordLink.velocity.utils.PlaceholderRegistry;
+import net.luckperms.api.LuckPermsProvider;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,8 +29,18 @@ public class DiscordCommand implements SimpleCommand {
             return;
         }
 
+        if(!hasPermission(source)) {
+            source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.discord.noperms", (Player)invocation.source())));
+            return;
+        }
+
         if (args.length == 0) {
             source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.discord.invite", (Player)invocation.source())));
+            return;
+        }
+
+        if(!hasPermission(source, args[0].toLowerCase())) {
+            source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.discord.noperms", (Player)invocation.source())));
             return;
         }
 
@@ -69,6 +83,27 @@ public class DiscordCommand implements SimpleCommand {
     }
 
     public List<String> suggest(SimpleCommand.Invocation invocation) {
-        return Arrays.asList("link", "unlink", "info");
+        if(!(invocation.source() instanceof Player)) return new ArrayList<>();
+        if(invocation.arguments().length == 1) {
+            List<String> choices = Arrays.asList("link", "unlink", "info");
+            List<String> finalChoices = new ArrayList<>();
+            choices.forEach(choice -> {
+                if(hasPermission(invocation.source(), choice)) finalChoices.add(choice);
+            });
+            return TabCompleterHelper.getArguments(finalChoices, invocation.arguments()[0]);
+        }
+
+        return new ArrayList<>();
+    }
+
+    public static boolean hasPermission(CommandSource source) {
+        if(source instanceof ConsoleCommandSource) return true;
+        return LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.player").asBoolean();
+    }
+
+    public static boolean hasPermission(CommandSource source, String subcommand) {
+        if(source instanceof ConsoleCommandSource) return true;
+        return (LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission(String.format("discordlink.player.%s", subcommand)).asBoolean()
+        || LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.player.*").asBoolean());
     }
 }
