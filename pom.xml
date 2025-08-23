@@ -128,7 +128,7 @@
                                 <filter>
                                     <artifact>com.mysql:mysql-connector-j</artifact>
                                     <excludes>
-                                        <exclude>LICENSE</exclude> <!-- vyřadíme defaultní LICENSE -->
+                                        <exclude>LICENSE</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
