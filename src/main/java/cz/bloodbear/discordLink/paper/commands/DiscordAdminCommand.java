@@ -17,7 +17,7 @@ public class DiscordAdminCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] args) {
 
         if((commandSender instanceof Player)) {
-            if(!LuckPermsProvider.get().getUserManager().getUser(((Player)commandSender).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.admin").asBoolean()) {
+            if(!hasPermission(commandSender)) {
                 commandSender.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.noperms")));
                 return true;
             }
@@ -25,6 +25,11 @@ public class DiscordAdminCommand implements CommandExecutor, TabCompleter {
 
         if(args.length == 0) {
             commandSender.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.usage")));
+            return true;
+        }
+
+        if(!hasPermission(commandSender, args[0])) {
+            commandSender.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.noperms")));
             return true;
         }
 
@@ -66,7 +71,7 @@ public class DiscordAdminCommand implements CommandExecutor, TabCompleter {
                 if(hasPermission(commandSender, choice)) finalChoices.add(choice);
             });
             return TabCompleterHelper.getArguments(finalChoices, args[0]);
-        } else if (args.length == 2) {
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("resync")) {
             List<String> suggestions = new ArrayList<>();
             DiscordLink.getInstance().getServer().getOnlinePlayers().forEach(player -> {
                 suggestions.add(player.getName());

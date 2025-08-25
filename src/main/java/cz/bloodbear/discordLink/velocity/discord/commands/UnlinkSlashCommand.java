@@ -10,8 +10,6 @@ import java.util.UUID;
 
 public class UnlinkSlashCommand {
     public static void invoke(@NotNull SlashCommandInteractionEvent event) {
-        //TODO: Slash command invocation
-
         JsonConfig config = DiscordLink.getInstance().getDiscordConfig();
 
         String userId = event.getUser().getId();

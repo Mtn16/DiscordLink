@@ -29,8 +29,18 @@ public class DiscordCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
+        if(!hasPermission(commandSender)) {
+            commandSender.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.discord.noperms", (Player)commandSender)));
+            return true;
+        }
+
         if (args.length == 0) {
             commandSender.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.discord.invite", (Player)commandSender)));
+            return true;
+        }
+
+        if(!hasPermission(commandSender, args[0])) {
+            commandSender.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.discord.noperms", (Player)commandSender)));
             return true;
         }
 

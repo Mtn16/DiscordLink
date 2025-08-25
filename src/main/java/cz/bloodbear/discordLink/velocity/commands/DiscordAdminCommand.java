@@ -20,13 +20,18 @@ public class DiscordAdminCommand implements SimpleCommand {
         String[] args = invocation.arguments();
 
         if((source instanceof Player)) {
-            if(!LuckPermsProvider.get().getUserManager().getUser(((Player)invocation.source()).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.admin").asBoolean()) {
+            if(!hasPermission(source)) {
                 source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.noperms", (Player) invocation.source())));
                 return;
             }
         }
 
         if(args.length == 0) {
+            source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.usage")));
+            return;
+        }
+
+        if(!hasPermission(invocation.source(), args[0])) {
             source.sendMessage(DiscordLink.getInstance().formatMessage(DiscordLink.getInstance().getMessage("command.admin.usage")));
             return;
         }
@@ -69,7 +74,7 @@ public class DiscordAdminCommand implements SimpleCommand {
                 if(hasPermission(invocation.source(), choice)) finalChoices.add(choice);
             });
             return TabCompleterHelper.getArguments(finalChoices, invocation.arguments()[0]);
-        } else if (invocation.arguments().length == 2) {
+        } else if (invocation.arguments().length == 2 && invocation.arguments()[0].equalsIgnoreCase("resync")) {
             List<String> suggestions = new ArrayList<>();
             DiscordLink.getInstance().getServer().getAllPlayers().forEach(player -> {
                 suggestions.add(player.getUsername());
