@@ -16,11 +16,32 @@
         "unlink": {
           "name": "unlink",
           "description": "Unlinks selected account from linked Minecraft server account.",
-          "arguments": [
-            {
-
+          "options": {
+            "user": {
+              "name": "user",
+              "description": "The user account to unlink"
             }
-          ]
+          },
+          "responses": {
+            "invalid_user": "Invalid user account provided.",
+            "not_linked": "Selected user's account is not linked.",
+            "success": "Selected user's has been unlinked successfully."
+          }
+        },
+        "resync": {
+          "name": "resync",
+          "description": "Syncs selected account's roles.",
+          "options": {
+            "user": {
+              "name": "user",
+              "description": "The user account to resync"
+            }
+          },
+          "responses": {
+            "not_linked": "Selected user's account is not linked.",
+            "success": "Selected user's has been synced successfully.",
+            "success_all": "All roles have been resynced successfully."
+          }
         }
       }
     },

@@ -1,6 +1,6 @@
-package cz.bloodbear.discordLink.velocity.discord.commands;
+package cz.bloodbear.discordLink.paper.discord.commands;
 
-import cz.bloodbear.discordLink.velocity.DiscordLink;
+import cz.bloodbear.discordLink.paper.DiscordLink;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -38,7 +38,7 @@ public class AdminSlashCommand {
                     "commands.admin.subcommands.unlink.responses.not_linked", "Selected user's account is not linked."));
             return;
         }
-        UUID uuid = cz.bloodbear.discordLink.velocity.DiscordLink.getInstance().getDatabaseManager().getPlayerByDiscord(member.getId());
+        UUID uuid = DiscordLink.getInstance().getDatabaseManager().getPlayerByDiscord(member.getId());
 
         DiscordLink.getInstance().getDatabaseManager().unlinkAccount(uuid.toString());
         event.getHook().editOriginal(DiscordLink.getInstance().getDiscordConfig().getString(

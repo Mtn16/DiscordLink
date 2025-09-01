@@ -9,10 +9,15 @@ import cz.bloodbear.discordLink.core.utils.DiscordUtils;
 import cz.bloodbear.discordLink.paper.utils.JsonConfig;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.InteractionContextType;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -43,12 +48,46 @@ public class DiscordBot extends ListenerAdapter {
 
     public void updateCommands() {
         JsonConfig config = DiscordLink.getInstance().getDiscordConfig();
+
+        SlashCommandData unlinkCommand = Commands.slash(
+                config.getString("commands.unlink.name", "unlink"),
+                config.getString("commands.unlink.description", "Unlinks your Discord account from linked Minecraft server account."));
+
+        SlashCommandData adminCommand = Commands.slash(
+                        config.getString("commands.admin.name", "admin"),
+                        config.getString("commands.admin.description", "DiscordLink admin command"));
+
+        unlinkCommand.setContexts(InteractionContextType.GUILD);
+        adminCommand.setContexts(InteractionContextType.GUILD);
+        adminCommand.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
+
+        SubcommandData unlinkSubCommand = new SubcommandData(
+                config.getString("commands.admin.subcommands.unlink.name", "unlink"),
+                config.getString("commands.admin.subcommands.unlink.description", "Unlinks selected account from linked Minecraft server account."
+                ));
+
+        unlinkSubCommand.addOption(OptionType.MENTIONABLE,
+                config.getString("commands.admin.subcommands.unlink.options.user.name", "user"),
+                config.getString("commands.admin.subcommands.unlink.options.user.description", "The user account to unlink"), true);
+
+        SubcommandData resyncSubCommand = new SubcommandData(
+                config.getString("commands.admin.subcommands.resync.name", "resync"),
+                config.getString("commands.admin.subcommands.resync.description", "Syncs selected account's roles."
+                ));
+
+        resyncSubCommand.addOption(OptionType.MENTIONABLE,
+                config.getString("commands.admin.subcommands.resync.options.user.name", "user"),
+                config.getString("commands.admin.subcommands.resync.options.user.description", "The user account to resync"), false);
+
+        adminCommand.addSubcommands(
+                unlinkSubCommand,
+                resyncSubCommand
+        );
+
+
         getGuild().updateCommands().addCommands(
-                Commands.slash(config.getString("commands.unlink.name", "unlink"), config.getString("commands.unlink.description", "Unlinks your Discord account from linked Minecraft server account.")),
-                Commands.slash(config.getString("commands.admin.name", "admin"), config.getString("commands.admin.description", "DiscordLink admin command"))
-                        .addSubcommands(
-                                new SubcommandData(config.getString("commands.admin.subcommands.unlink.name", "unlink"), config.getString("commands.admin.subcommands.unlink.description", "Unlinks selected account from linked Minecraft server account."))
-                        )
+                unlinkCommand,
+                adminCommand
         );
     }
 

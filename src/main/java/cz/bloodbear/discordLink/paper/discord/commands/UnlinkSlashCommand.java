@@ -1,8 +1,8 @@
-package cz.bloodbear.discordLink.velocity.discord.commands;
+package cz.bloodbear.discordLink.paper.discord.commands;
 
-import cz.bloodbear.discordLink.velocity.DiscordLink;
-import cz.bloodbear.discordLink.velocity.discord.DiscordBot;
-import cz.bloodbear.discordLink.velocity.utils.JsonConfig;
+import cz.bloodbear.discordLink.paper.DiscordLink;
+import cz.bloodbear.discordLink.paper.discord.DiscordBot;
+import cz.bloodbear.discordLink.paper.utils.JsonConfig;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.jetbrains.annotations.NotNull;
 
