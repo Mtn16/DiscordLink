@@ -3,7 +3,7 @@ package cz.bloodbear.discordLink.paper.discord;
 import cz.bloodbear.discordLink.paper.DiscordLink;
 import cz.bloodbear.discordLink.core.records.RoleEntry;
 import cz.bloodbear.discordLink.core.utils.ConsoleColor;
-import cz.bloodbear.discordLink.paper.discord.listener.SlashCommandListener;
+import cz.bloodbear.discordLink.paper.discord.listeners.SlashCommandListener;
 import cz.bloodbear.discordLink.paper.utils.DatabaseManager;
 import cz.bloodbear.discordLink.core.utils.DiscordUtils;
 import cz.bloodbear.discordLink.paper.utils.JsonConfig;
@@ -41,7 +41,6 @@ public class DiscordBot extends ListenerAdapter {
                 .addEventListeners(new SlashCommandListener())
                 .build();
 
-        updateCommands();
         instance = this;
     }
 
@@ -88,7 +87,7 @@ public class DiscordBot extends ListenerAdapter {
         getGuild().updateCommands().addCommands(
                 unlinkCommand,
                 adminCommand
-        );
+        ).queue();
     }
 
     public Guild getGuild() {
@@ -112,6 +111,7 @@ public class DiscordBot extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
         DiscordLink.getInstance().getLogger().info(ConsoleColor.green("Bot ready!"));
+        updateCommands();
         startAutoSync();
     }
 

@@ -42,7 +42,6 @@ public class DiscordBot extends ListenerAdapter {
                 .addEventListeners(new SlashCommandListener())
                 .build();
 
-        updateCommands();
         instance = this;
     }
 
@@ -87,7 +86,7 @@ public class DiscordBot extends ListenerAdapter {
         getGuild().updateCommands().addCommands(
                 unlinkCommand,
                 adminCommand
-        );
+        ).queue();
     }
 
     public Guild getGuild() {
@@ -111,6 +110,7 @@ public class DiscordBot extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
         DiscordLink.getInstance().getLogger().info(ConsoleColor.green("Bot ready!"));
+        updateCommands();
         startAutoSync();
     }
 
