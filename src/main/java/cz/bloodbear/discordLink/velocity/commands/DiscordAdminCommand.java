@@ -67,12 +67,16 @@ public class DiscordAdminCommand implements SimpleCommand {
 
     public List<String> suggest(Invocation invocation) {
         if(!(invocation.source() instanceof Player)) return new ArrayList<>();
-        if(invocation.arguments().length == 1) {
+
+        if(invocation.arguments().length <= 1) {
             List<String> choices = Arrays.asList("resync", "resyncAll", "reload");
             List<String> finalChoices = new ArrayList<>();
             choices.forEach(choice -> {
                 if(hasPermission(invocation.source(), choice)) finalChoices.add(choice);
             });
+            if(invocation.arguments().length == 0) {
+                return choices;
+            }
             return TabCompleterHelper.getArguments(finalChoices, invocation.arguments()[0]);
         } else if (invocation.arguments().length == 2 && invocation.arguments()[0].equalsIgnoreCase("resync")) {
             List<String> suggestions = new ArrayList<>();
@@ -88,12 +92,13 @@ public class DiscordAdminCommand implements SimpleCommand {
     
     public static boolean hasPermission(CommandSource source) {
         if(source instanceof ConsoleCommandSource) return true;
-        return LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.player").asBoolean();
+        return LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.admin").asBoolean();
     }
 
     public static boolean hasPermission(CommandSource source, String subcommand) {
         if(source instanceof ConsoleCommandSource) return true;
-        return (LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission(String.format("discordlink.player.%s", subcommand)).asBoolean()
-                || LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.player.*").asBoolean());
+        System.out.println(String.format("discordlink.admin.%s", subcommand));
+        return (LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission(String.format("discordlink.admin.%s", subcommand.toLowerCase())).asBoolean()
+                || LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.admin.*").asBoolean());
     }
 }
