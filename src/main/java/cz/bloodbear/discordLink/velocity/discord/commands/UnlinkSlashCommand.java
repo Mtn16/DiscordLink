@@ -14,18 +14,18 @@ public class UnlinkSlashCommand {
 
         String userId = event.getUser().getId();
         if(!DiscordLink.getInstance().getDatabaseManager().isDiscordAccountLinked(userId)) {
-            event.getHook().editOriginal(config.getString("commands.unlink.responses.not_linked", "Your account is not linked to any Minecraft account."));
+            event.getHook().editOriginal(config.getString("commands.unlink.responses.not_linked", "Your account is not linked to any Minecraft account.")).queue();
             return;
         }
 
         UUID uuid = DiscordLink.getInstance().getDatabaseManager().getPlayerByDiscord(userId);
 
         if(!DiscordBot.getInstance().hasPermission(uuid.toString(), "discordlink.player.unlink")) {
-            event.getHook().editOriginal(config.getString("commands.unlink.responses.no_permission", "You do not have permission to unlink your account."));
+            event.getHook().editOriginal(config.getString("commands.unlink.responses.no_permission", "You do not have permission to unlink your account.")).queue();
             return;
         }
 
         DiscordLink.getInstance().getDatabaseManager().unlinkAccount(uuid.toString());
-        event.getHook().editOriginal(config.getString("commands.unlink.responses.success", "Your account has been unlinked successfully."));
+        event.getHook().editOriginal(config.getString("commands.unlink.responses.success", "Your account has been unlinked successfully.")).queue();
     }
 }

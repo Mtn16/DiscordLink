@@ -1,4 +1,4 @@
-package cz.bloodbear.discordLink.paper.discord.listener;
+package cz.bloodbear.discordLink.paper.discord.listeners;
 
 import cz.bloodbear.discordLink.paper.DiscordLink;
 import cz.bloodbear.discordLink.paper.discord.commands.AdminSlashCommand;

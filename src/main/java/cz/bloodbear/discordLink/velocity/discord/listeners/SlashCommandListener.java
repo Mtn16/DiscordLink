@@ -1,6 +1,6 @@
 package cz.bloodbear.discordLink.velocity.discord.listeners;
 
-import cz.bloodbear.discordLink.paper.DiscordLink;
+import cz.bloodbear.discordLink.velocity.DiscordLink;
 import cz.bloodbear.discordLink.velocity.discord.commands.AdminSlashCommand;
 import cz.bloodbear.discordLink.velocity.discord.commands.UnlinkSlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
