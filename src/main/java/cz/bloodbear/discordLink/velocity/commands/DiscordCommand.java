@@ -84,12 +84,16 @@ public class DiscordCommand implements SimpleCommand {
 
     public List<String> suggest(SimpleCommand.Invocation invocation) {
         if(!(invocation.source() instanceof Player)) return new ArrayList<>();
-        if(invocation.arguments().length == 1) {
+
+        if(invocation.arguments().length <= 1) {
             List<String> choices = Arrays.asList("link", "unlink", "info");
             List<String> finalChoices = new ArrayList<>();
             choices.forEach(choice -> {
                 if(hasPermission(invocation.source(), choice)) finalChoices.add(choice);
             });
+            if(invocation.arguments().length == 0) {
+                return choices;
+            }
             return TabCompleterHelper.getArguments(finalChoices, invocation.arguments()[0]);
         }
 
@@ -103,7 +107,7 @@ public class DiscordCommand implements SimpleCommand {
 
     public static boolean hasPermission(CommandSource source, String subcommand) {
         if(source instanceof ConsoleCommandSource) return true;
-        return (LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission(String.format("discordlink.player.%s", subcommand)).asBoolean()
+        return (LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission(String.format("discordlink.player.%s", subcommand.toLowerCase())).asBoolean()
         || LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.player.*").asBoolean());
     }
 }

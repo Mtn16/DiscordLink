@@ -87,12 +87,15 @@ public class DiscordCommand implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] args) {
         if(!(commandSender instanceof Player)) return new ArrayList<>();
-        if(args.length == 1) {
+        if(args.length <= 1) {
             List<String> choices = Arrays.asList("link", "unlink", "info");
             List<String> finalChoices = new ArrayList<>();
             choices.forEach(choice -> {
                 if(hasPermission(commandSender, choice)) finalChoices.add(choice);
             });
+            if(args.length == 0) {
+                return choices;
+            }
             return TabCompleterHelper.getArguments(finalChoices, args[0]);
         }
 
@@ -106,7 +109,7 @@ public class DiscordCommand implements CommandExecutor, TabCompleter {
 
     public static boolean hasPermission(CommandSender source, String subcommand) {
         if(source instanceof ConsoleCommandSender) return true;
-        return (LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission(String.format("discordlink.player.%s", subcommand)).asBoolean()
+        return (LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission(String.format("discordlink.player.%s", subcommand.toLowerCase())).asBoolean()
                 || LuckPermsProvider.get().getUserManager().getUser(((Player) source).getUniqueId()).getCachedData().getPermissionData().checkPermission("discordlink.player.*").asBoolean());
     }
 }
