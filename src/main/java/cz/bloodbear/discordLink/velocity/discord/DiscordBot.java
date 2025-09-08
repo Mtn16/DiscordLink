@@ -141,28 +141,34 @@ public class DiscordBot extends ListenerAdapter {
     public void syncRoles(User user, String uuid) {
         new Thread(() -> {
             Guild guild = jda.getGuildById(guildId);
-            if (guild == null) return;
+            if (guild == null) {
+                DiscordLink.getInstance().getLogger().info("\\033[31mUnknown guild ID");
+                return;
+            };
+            try {
+                Member member = guild.retrieveMemberById(user.getId()).complete();
 
-            Member member = guild.retrieveMemberById(user.getId()).complete();
+                if (member == null) return;
 
-            if (member == null) return;
-
-            for (RoleEntry role : DiscordLink.getInstance().getRoles()) {
-                try {
-                    Role guildRole = guild.getRoleById(role.roleId());
-                    if(hasPermission(uuid, role.permission())) {
-                        if(!DiscordUtils.hasRole(member, role.roleId())) {
-                            assert guildRole != null;
-                            guild.addRoleToMember(member, guildRole);
+                for (RoleEntry role : DiscordLink.getInstance().getRoles()) {
+                    try {
+                        Role guildRole = guild.getRoleById(role.roleId());
+                        if(hasPermission(uuid, role.permission())) {
+                            if(!DiscordUtils.hasRole(member, role.roleId())) {
+                                assert guildRole != null;
+                                guild.addRoleToMember(member, guildRole);
+                            }
+                        } else {
+                            if(DiscordUtils.hasRole(member, role.roleId())) {
+                                assert guildRole != null;
+                                guild.removeRoleFromMember(member, guildRole);
+                            }
                         }
-                    } else {
-                        if(DiscordUtils.hasRole(member, role.roleId())) {
-                            assert guildRole != null;
-                            guild.removeRoleFromMember(member, guildRole);
-                        }
-                    }
-                } catch (Exception ignored) {}
-            }
+                    } catch (Exception ignored) {}
+                }
+            } catch (Exception ignored) {}
+
+
         }).start();
     }
 
