@@ -37,7 +37,8 @@ import java.util.List;
         authors = {"Mtn16"}, url = "https://github.com/Mtn16/DiscordLink",
         description = "A Velocity plugin for Discord integration.",
         dependencies = {
-            @Dependency(id = "luckperms", optional = false)
+            @Dependency(id = "luckperms", optional = false),
+            @Dependency(id = "plan", optional = true)
         })
 public class DiscordLink {
     private static DiscordLink instance;

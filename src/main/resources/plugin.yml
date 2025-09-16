@@ -7,7 +7,7 @@ author: Mtn16
 description: Seamless Discord Integration for Velocity and Paper
 website: https://github.com/Mtn16/DiscordLink
 depend: [LuckPerms]
-softdepend: [PlaceholderAPI]
+softdepend: [PlaceholderAPI, Plan]
 
 commands:
   discordadmin:

@@ -223,6 +223,10 @@
     </build>
     <repositories>
         <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
@@ -232,6 +236,12 @@
         </repository>
     </repositories>
     <dependencies>
+        <dependency>
+            <groupId>com.github.plan-player-analytics</groupId>
+            <artifactId>Plan</artifactId>
+            <version>5.6.2965</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity-api</artifactId>

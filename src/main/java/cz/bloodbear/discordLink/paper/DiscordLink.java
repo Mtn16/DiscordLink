@@ -1,5 +1,7 @@
 package cz.bloodbear.discordLink.paper;
 
+import com.djrapitops.plan.extension.DataExtension;
+import com.djrapitops.plan.extension.ExtensionService;
 import com.google.inject.Inject;
 import cz.bloodbear.discordLink.core.utils.UpdateChecker;
 import cz.bloodbear.discordLink.paper.commands.DiscordAdminCommand;
@@ -135,6 +137,12 @@ public class DiscordLink extends JavaPlugin {
         this.luckPerms = LuckPermsProvider.get();
 
         databaseManager.deleteLinkCodes();
+        try {
+            DataExtension planExtension = new PlanExtension();
+            ExtensionService.getInstance().register(planExtension);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void checkVersion() {

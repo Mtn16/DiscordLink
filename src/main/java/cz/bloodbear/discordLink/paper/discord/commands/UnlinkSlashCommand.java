@@ -26,6 +26,7 @@ public class UnlinkSlashCommand {
         }
 
         DiscordLink.getInstance().getDatabaseManager().unlinkAccount(uuid.toString());
+
         event.getHook().editOriginal(config.getString("commands.unlink.responses.success", "Your account has been unlinked successfully.")).queue();
     }
 }
