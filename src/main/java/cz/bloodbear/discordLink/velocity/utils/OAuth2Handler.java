@@ -1,5 +1,6 @@
 package cz.bloodbear.discordLink.velocity.utils;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import cz.bloodbear.discordLink.velocity.DiscordLink;
@@ -12,13 +13,15 @@ public class OAuth2Handler {
     private final String CLIENT_ID;
     private final String CLIENT_SECRET;
     private final String REDIRECT_URI;
+    private final String TOKEN;
 
     private final OkHttpClient httpClient;
 
-    public OAuth2Handler(String CLIENT_ID, String CLIENT_SECRET, String REDIRECT_URI) {
+    public OAuth2Handler(String CLIENT_ID, String CLIENT_SECRET, String REDIRECT_URI, String TOKEN) {
         this.CLIENT_ID = CLIENT_ID;
         this.CLIENT_SECRET = CLIENT_SECRET;
         this.REDIRECT_URI = REDIRECT_URI;
+        this.TOKEN = TOKEN;
 
         this.httpClient = new OkHttpClient();
     }
@@ -49,11 +52,40 @@ public class OAuth2Handler {
             String accessToken = getAccessToken(code);
 
             DiscordAccount accountDetails = getAccountDetails(accessToken);
+            addUserToGuild(accessToken, accountDetails);
             return new DiscordAccount(accountDetails.id(), accountDetails.username());
         } catch (IOException e) {
             DiscordLink.getInstance().getLogger().error(e.getMessage());
         }
         return null;
+    }
+
+
+    public void addUserToGuild(String accessToken, DiscordAccount discordAccount) {
+        JsonObject bodyJson = new JsonObject();
+        bodyJson.addProperty("access_token", accessToken);
+
+        RequestBody body = RequestBody.create(
+                new Gson().toJson(bodyJson),
+                MediaType.parse("application/json")
+        );
+
+        Request request = new Request.Builder()
+                .url("https://discord.com/api/guilds/" + cz.bloodbear.discordLink.paper.DiscordLink.getInstance().getGuildId() + "/members/" + discordAccount.id())
+                .put(body)
+                .header("Authorization", "Bot " + TOKEN)
+                .header("Content-Type", "application/json")
+                .build();
+
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (response.code() == 201 || response.code() == 204) {
+                cz.bloodbear.discordLink.paper.DiscordLink.getInstance().getLogger().info("✅ Discord user " + discordAccount.username() + " has been added to Discord server.");
+            } else {
+                cz.bloodbear.discordLink.paper.DiscordLink.getInstance().getLogger().severe("❌ Failed to add Discord user to server: " + response.code() + " - " + response.body().string());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String extractValue(String json, String key) {

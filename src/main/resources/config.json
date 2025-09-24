@@ -25,6 +25,9 @@
     "bot": {
       "token": "",
       "presence": "play.yourserver.com"
+    },
+    "link": {
+      "join_guild": false
     }
   },
   "plugin": {

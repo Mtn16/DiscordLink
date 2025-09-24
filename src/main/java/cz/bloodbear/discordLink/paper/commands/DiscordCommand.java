@@ -53,10 +53,14 @@ public class DiscordCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
+            String scope = "identify";
+            if(DiscordLink.getInstance().getJoinGuild()) {
+                scope = "identify%20guilds.join";
+            }
             databaseManager.deleteLinkCodes(player.getUniqueId().toString());
             String code = CodeGenerator.generateCode();
             databaseManager.saveLinkRequest(player.getUniqueId().toString(), code);
-            String url = DiscordUtils.getOAuthLink(DiscordLink.getInstance().getClientId(), DiscordLink.getInstance().getRedirectUri(), code);
+            String url = DiscordUtils.getOAuthLink(DiscordLink.getInstance().getClientId(), DiscordLink.getInstance().getRedirectUri(), code, scope);
             player.sendMessage(DiscordLink.getInstance().formatMessage(PlaceholderRegistry.replacePlaceholders(DiscordLink.getInstance().getMessage("command.discord.link", player).replace("[linkUrl]", url), player)));
             return true;
         }

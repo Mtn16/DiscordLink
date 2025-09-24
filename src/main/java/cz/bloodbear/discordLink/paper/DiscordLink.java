@@ -106,7 +106,8 @@ public class DiscordLink extends JavaPlugin {
         this.oAuth2Handler = new OAuth2Handler(
                 config.getString("discord.client.id", ""),
                 config.getString("discord.client.secret", ""),
-                redirect
+                redirect,
+                config.getString("discord.bot.token", "")
         );
 
         loadPlaceholders();
@@ -247,5 +248,13 @@ public class DiscordLink extends JavaPlugin {
 
     public JsonConfig getDiscordConfig() {
         return discordConfig;
+    }
+
+    public boolean getJoinGuild() {
+        return config.getBoolean("discord.link.join_guild", false);
+    }
+
+    public String getGuildId() {
+        return config.getString("discord.guildId", "");
     }
 }
