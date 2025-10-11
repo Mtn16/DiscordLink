@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.List;
 
 @Plugin(id = "discordlink", name = "DiscordLink", version = "25.7",
@@ -71,6 +72,8 @@ public class DiscordLink {
     private DiscordBot discordBot;
     private LuckPerms luckPerms;
 
+    private long startTime;
+
     @Inject
     public DiscordLink(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, PluginContainer container) {
         instance = this;
@@ -86,6 +89,8 @@ public class DiscordLink {
         this.commands = new JsonConfig(dataDirectory, "commands.json");
         this.discordConfig = new JsonConfig(dataDirectory, "discord.json");
         this.miniMessage = MiniMessage.miniMessage();
+
+        startTime = System.currentTimeMillis();
 
         loadHTML();
 
@@ -254,4 +259,6 @@ public class DiscordLink {
     public String getGuildId() {
         return config.getString("discord.guildId", "");
     }
+
+    public Duration getUptime() { return Duration.ofMillis(System.currentTimeMillis() - startTime); }
 }

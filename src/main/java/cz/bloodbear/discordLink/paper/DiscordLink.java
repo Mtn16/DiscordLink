@@ -1,7 +1,5 @@
 package cz.bloodbear.discordLink.paper;
 
-import com.djrapitops.plan.extension.DataExtension;
-import com.djrapitops.plan.extension.ExtensionService;
 import com.google.inject.Inject;
 import cz.bloodbear.discordLink.core.utils.UpdateChecker;
 import cz.bloodbear.discordLink.paper.commands.DiscordAdminCommand;
@@ -25,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -58,6 +57,8 @@ public class DiscordLink extends JavaPlugin {
     private DiscordBot discordBot;
     private LuckPerms luckPerms;
 
+    private long startTime;
+
     private boolean isPlaceholderAPIEnabled;
 
     @Override
@@ -74,6 +75,8 @@ public class DiscordLink extends JavaPlugin {
         this.commands = new JsonConfig(dataDirectory, "commands.json");
         this.discordConfig = new JsonConfig(dataDirectory, "discord.json");
         this.miniMessage = MiniMessage.miniMessage();
+
+        startTime = System.currentTimeMillis();
 
         getServer().getPluginManager().registerEvents(new PlayerConnection(), this);
 
@@ -138,12 +141,6 @@ public class DiscordLink extends JavaPlugin {
         this.luckPerms = LuckPermsProvider.get();
 
         databaseManager.deleteLinkCodes();
-        try {
-            DataExtension planExtension = new PlanExtension();
-            ExtensionService.getInstance().register(planExtension);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void checkVersion() {
@@ -257,4 +254,6 @@ public class DiscordLink extends JavaPlugin {
     public String getGuildId() {
         return config.getString("discord.guildId", "");
     }
+
+    public Duration getUptime() { return Duration.ofMillis(System.currentTimeMillis() - startTime); }
 }

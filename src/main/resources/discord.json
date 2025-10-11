@@ -45,6 +45,34 @@
         }
       }
     },
+    "status": {
+      "name": "status",
+      "descriptions": "Displays current the status of the server.",
+      "responses": {
+        "success": {
+          "title": "",
+          "color": "0x00FF00",
+          "thumbnail": true,
+          "fields": [
+            {
+              "name": "Server uptime",
+              "type": "UPTIME",
+              "inline": false
+            },
+            {
+              "name": "Max players",
+              "type": "MAX",
+              "inline": true
+            },
+            {
+              "name": "Online players",
+              "type": "ONLINE",
+              "inline": true
+            }
+          ]
+        }
+      }
+    },
     "unknown": {
       "response": "Unknown command."
     }

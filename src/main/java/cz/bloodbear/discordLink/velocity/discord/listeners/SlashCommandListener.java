@@ -1,6 +1,7 @@
 package cz.bloodbear.discordLink.velocity.discord.listeners;
 
 import cz.bloodbear.discordLink.velocity.DiscordLink;
+import cz.bloodbear.discordLink.velocity.commands.StatusSlashCommand;
 import cz.bloodbear.discordLink.velocity.discord.commands.AdminSlashCommand;
 import cz.bloodbear.discordLink.velocity.discord.commands.UnlinkSlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -18,6 +19,8 @@ public class SlashCommandListener extends ListenerAdapter {
             UnlinkSlashCommand.invoke(event);
         } else if (command.equals(DiscordLink.getInstance().getDiscordConfig().getString("commands.admin.name", "admin"))) {
             AdminSlashCommand.invoke(event);
+        } else if (command.equals(DiscordLink.getInstance().getDiscordConfig().getString("commands.status.name", "status"))) {
+            StatusSlashCommand.invoke(event);
         } else {
             event.getHook().editOriginal(
                     DiscordLink.getInstance().getDiscordConfig().getString("commands.unknown.response", "Unknown command.")

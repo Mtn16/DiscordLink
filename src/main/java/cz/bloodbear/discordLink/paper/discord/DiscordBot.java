@@ -48,15 +48,20 @@ public class DiscordBot extends ListenerAdapter {
     public void updateCommands() {
         JsonConfig config = DiscordLink.getInstance().getDiscordConfig();
 
+        //region Unlink command
         SlashCommandData unlinkCommand = Commands.slash(
                 config.getString("commands.unlink.name", "unlink"),
                 config.getString("commands.unlink.description", "Unlinks your Discord account from linked Minecraft server account."));
 
+        unlinkCommand.setContexts(InteractionContextType.GUILD);
+        //endregion
+
+        //region Admin command
         SlashCommandData adminCommand = Commands.slash(
                         config.getString("commands.admin.name", "admin"),
                         config.getString("commands.admin.description", "DiscordLink admin command"));
 
-        unlinkCommand.setContexts(InteractionContextType.GUILD);
+
         adminCommand.setContexts(InteractionContextType.GUILD);
         adminCommand.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
 
@@ -83,10 +88,20 @@ public class DiscordBot extends ListenerAdapter {
                 resyncSubCommand
         );
 
+        //endregion
+
+        //region Status command
+        SlashCommandData statusCommand = Commands.slash(
+                config.getString("commands.status.name", "status"),
+                config.getString("commands.status.description", "Displays current the status of the server."));
+
+        unlinkCommand.setContexts(InteractionContextType.GUILD);
+        //endregion
 
         getGuild().updateCommands().addCommands(
                 unlinkCommand,
-                adminCommand
+                adminCommand,
+                statusCommand
         ).queue();
     }
 
