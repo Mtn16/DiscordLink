@@ -3,6 +3,7 @@ package cz.bloodbear.discordLink.paper.utils;
 
 import com.google.gson.*;
 import cz.bloodbear.discordLink.core.records.RoleEntry;
+import cz.bloodbear.discordLink.core.utils.Config;
 import cz.bloodbear.discordLink.paper.DiscordLink;
 import io.leangen.geantyref.TypeToken;
 
@@ -17,7 +18,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-public class JsonConfig {
+public class JsonConfig implements Config {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private final Path configPath;
     private JsonObject jsonData;

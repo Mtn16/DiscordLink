@@ -3,13 +3,14 @@ package cz.bloodbear.discordLink.paper.utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import cz.bloodbear.discordLink.core.utils.AuthHandler;
 import cz.bloodbear.discordLink.paper.DiscordLink;
 import cz.bloodbear.discordLink.core.records.DiscordAccount;
 import okhttp3.*;
 
 import java.io.IOException;
 
-public class OAuth2Handler {
+public class OAuth2Handler implements AuthHandler {
     private final String CLIENT_ID;
     private final String CLIENT_SECRET;
     private final String REDIRECT_URI;

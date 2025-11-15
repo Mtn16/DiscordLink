@@ -1,11 +1,14 @@
 package cz.bloodbear.discordLink.paper;
 
 import com.google.inject.Inject;
+import cz.bloodbear.discordLink.core.utils.Plugin;
 import cz.bloodbear.discordLink.core.utils.UpdateChecker;
+import cz.bloodbear.discordLink.core.utils.event.EventBus;
 import cz.bloodbear.discordLink.paper.commands.DiscordAdminCommand;
 import cz.bloodbear.discordLink.paper.commands.DiscordCommand;
 import cz.bloodbear.discordLink.paper.discord.DiscordBot;
 import cz.bloodbear.discordLink.paper.events.PlayerConnection;
+import cz.bloodbear.discordLink.core.event.PlayerSync;
 import cz.bloodbear.discordLink.paper.placeholders.DiscordIdPlaceholder;
 import cz.bloodbear.discordLink.paper.placeholders.DiscordUsernamePlaceholder;
 import cz.bloodbear.discordLink.paper.placeholders.PlayerNamePlaceholder;
@@ -27,7 +30,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class DiscordLink extends JavaPlugin {
+public class DiscordLink extends JavaPlugin implements Plugin {
     private static DiscordLink instance;
 
     @Inject
@@ -57,6 +60,8 @@ public class DiscordLink extends JavaPlugin {
     private DiscordBot discordBot;
     private LuckPerms luckPerms;
 
+    private EventBus eventBus;
+
     private long startTime;
 
     private boolean isPlaceholderAPIEnabled;
@@ -76,10 +81,11 @@ public class DiscordLink extends JavaPlugin {
         this.discordConfig = new JsonConfig(dataDirectory, "discord.json");
         this.miniMessage = MiniMessage.miniMessage();
 
+        this.eventBus = new EventBus();
+
         startTime = System.currentTimeMillis();
 
-        getServer().getPluginManager().registerEvents(new PlayerConnection(), this);
-
+        loadListeners();
         loadHTML();
 
         this.databaseManager = new DatabaseManager(
@@ -141,6 +147,13 @@ public class DiscordLink extends JavaPlugin {
         this.luckPerms = LuckPermsProvider.get();
 
         databaseManager.deleteLinkCodes();
+    }
+
+    private void loadListeners() {
+
+        getServer().getPluginManager().registerEvents(new PlayerConnection(), this);
+
+        new PlayerSync(eventBus, databaseManager, discordBot.getJdaInstance(), getGuildId());
     }
 
     private void checkVersion() {
@@ -256,4 +269,6 @@ public class DiscordLink extends JavaPlugin {
     }
 
     public Duration getUptime() { return Duration.ofMillis(System.currentTimeMillis() - startTime); }
+
+    public EventBus getEventBus() { return eventBus; }
 }

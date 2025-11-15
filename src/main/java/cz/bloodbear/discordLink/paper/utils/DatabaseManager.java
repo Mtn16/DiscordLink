@@ -1,5 +1,6 @@
 package cz.bloodbear.discordLink.paper.utils;
 
+import cz.bloodbear.discordLink.core.utils.DB;
 import cz.bloodbear.discordLink.paper.DiscordLink;
 import cz.bloodbear.discordLink.core.records.DiscordAccount;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class DatabaseManager {
+public class DatabaseManager implements DB {
     private Connection connection;
 
     public DatabaseManager(String host, int port, String database, String username, String password, boolean useSSL) {

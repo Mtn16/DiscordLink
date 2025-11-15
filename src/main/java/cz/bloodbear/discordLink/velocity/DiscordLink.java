@@ -12,7 +12,9 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import cz.bloodbear.discordLink.core.event.PlayerSync;
 import cz.bloodbear.discordLink.core.utils.UpdateChecker;
+import cz.bloodbear.discordLink.core.utils.event.EventBus;
 import cz.bloodbear.discordLink.velocity.commands.DiscordAdminCommand;
 import cz.bloodbear.discordLink.velocity.commands.DiscordCommand;
 import cz.bloodbear.discordLink.velocity.discord.DiscordBot;
@@ -41,7 +43,7 @@ import java.util.List;
             @Dependency(id = "luckperms", optional = false),
             @Dependency(id = "plan", optional = true)
         })
-public class DiscordLink {
+public class DiscordLink implements cz.bloodbear.discordLink.core.utils.Plugin {
     private static DiscordLink instance;
 
     @Inject
@@ -72,6 +74,8 @@ public class DiscordLink {
     private DiscordBot discordBot;
     private LuckPerms luckPerms;
 
+    private EventBus eventBus;
+
     private long startTime;
 
     @Inject
@@ -90,8 +94,11 @@ public class DiscordLink {
         this.discordConfig = new JsonConfig(dataDirectory, "discord.json");
         this.miniMessage = MiniMessage.miniMessage();
 
+        this.eventBus = new EventBus();
+
         startTime = System.currentTimeMillis();
 
+        loadListeners();
         loadHTML();
 
         this.databaseManager = new DatabaseManager(
@@ -126,6 +133,10 @@ public class DiscordLink {
         );
 
         loadPlaceholders();
+    }
+
+    private void loadListeners() {
+        new PlayerSync(eventBus, databaseManager, discordBot.getJdaInstance(), getGuildId());
     }
 
     private void checkVersion() {
@@ -238,6 +249,10 @@ public class DiscordLink {
 
     public List<RoleEntry> getRoles() { return sync.getRoles("roles"); }
 
+    public boolean isPlaceholderAPIEnabled() {
+        return false;
+    }
+
     public void reloadConfig() {
         config.reload();
         messages.reload();
@@ -261,4 +276,9 @@ public class DiscordLink {
     }
 
     public Duration getUptime() { return Duration.ofMillis(System.currentTimeMillis() - startTime); }
+
+    @Override
+    public EventBus getEventBus() {
+        return eventBus;
+    }
 }

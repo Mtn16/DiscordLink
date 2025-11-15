@@ -1,5 +1,6 @@
 package cz.bloodbear.discordLink.velocity.utils;
 
+import cz.bloodbear.discordLink.core.utils.Page;
 import cz.bloodbear.discordLink.velocity.DiscordLink;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
-public class HtmlPage {
+public class HtmlPage implements Page {
     private final Path pagePath;
     private String content;
 

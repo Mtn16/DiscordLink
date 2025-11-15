@@ -12,5 +12,12 @@
       "role_id": "993233366671446137",
       "permission": "group.vip3"
     }
-  ]
+  ],
+  "nickname": {
+    "enabled": false,
+    "permission": {
+      "required": false,
+      "permission": "discordlink.name.sync"
+    }
+  }
 }

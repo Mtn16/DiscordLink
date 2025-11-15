@@ -1,5 +1,7 @@
 package cz.bloodbear.discordLink.velocity.discord;
 
+import cz.bloodbear.discordLink.core.event.PlayerSyncEvent;
+import cz.bloodbear.discordLink.core.utils.Bot;
 import cz.bloodbear.discordLink.velocity.DiscordLink;
 import cz.bloodbear.discordLink.core.records.RoleEntry;
 import cz.bloodbear.discordLink.core.utils.ConsoleColor;
@@ -27,7 +29,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class DiscordBot extends ListenerAdapter {
+public class DiscordBot extends ListenerAdapter implements Bot {
     private static DiscordBot instance;
     private final JDA jda;
     private final DatabaseManager databaseManager;
@@ -148,13 +150,13 @@ public class DiscordBot extends ListenerAdapter {
             try {
                 User user = jda.retrieveUserById(discordId).complete();
                 if(user != null) {
-                    syncRoles(user, uuid);
+                    syncRoles(uuid);
                 }
             } catch (Exception ignored) {}
         });
     }
 
-    public void syncRoles(User user, String uuid) {
+    /*public void syncRoles(User user, String uuid) {
         new Thread(() -> {
             Guild guild = jda.getGuildById(guildId);
             if (guild == null) {
@@ -188,8 +190,11 @@ public class DiscordBot extends ListenerAdapter {
         }).start();
     }
 
+    */
+
     public void syncRoles(String uuid) {
-        new Thread(() -> {
+        DiscordLink.getInstance().getEventBus().callEvent(new PlayerSyncEvent(uuid));
+        /*new Thread(() -> {
             User user = jda.retrieveUserById(databaseManager.getDiscordAccount(uuid).id()).complete();
             Guild guild = jda.getGuildById(guildId);
             if (guild == null) return;
@@ -212,7 +217,7 @@ public class DiscordBot extends ListenerAdapter {
                     }
                 } catch (Exception ignored) {}
             }
-        }).start();
+        }).start();*/
     }
 
     public boolean hasPermission(String uuid, String permission) {
